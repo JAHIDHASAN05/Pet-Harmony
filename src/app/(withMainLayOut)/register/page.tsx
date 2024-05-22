@@ -12,38 +12,38 @@ const RegisterPage = () => {
             Please Register
           </h1>
 
-        <div className="md:flex justify-between">
-        <div className="mb-4">
-            <label
-              htmlFor="fullName"
-              className="block text-gray-700 font-bold mb-2"
-            >
-             Your Full Name
-            </label>
-            <input
-             placeholder="Your Email"
-              type="text"
-              id="fullName"
-              name="fullName"
-              className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-            />
+          <div className="md:flex justify-between">
+            <div className="mb-4">
+              <label
+                htmlFor="fullName"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Your Full Name
+              </label>
+              <input
+                placeholder="Your Email"
+                type="text"
+                id="fullName"
+                name="fullName"
+                className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="fullName"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Your Name
+              </label>
+              <input
+                placeholder="Your Email"
+                type="text"
+                id="fullName"
+                name="fullName"
+                className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="fullName"
-              className="block text-gray-700 font-bold mb-2"
-            >
-             Your Name
-            </label>
-            <input
-             placeholder="Your Email"
-              type="text"
-              id="fullName"
-              name="fullName"
-              className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-            />
-          </div>
-        </div>
 
           <div className="mb-4">
             <label
@@ -60,42 +60,42 @@ const RegisterPage = () => {
               className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
             />
           </div>
-         <div className="md:flex justify-between">
-         <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="your password"
-              className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-            />
+          <div className="md:flex justify-between">
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="your password"
+                className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="your password"
+                className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="your password"
-              className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-            />
-          </div>
-         </div>
           <div className="mb-4">
             <label className="inline-flex items-center">
               <input
-               placeholder="Your Email"
+                placeholder="Your Email"
                 type="checkbox"
                 name="terms"
                 className="form-checkbox h-5 w-5 text-blue-600"
