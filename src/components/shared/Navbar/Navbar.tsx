@@ -49,8 +49,8 @@ const Navbar = () => {
           {NavItems}
         </ul>
       </div>
-      <div className="navbar-end gap-5">
-        <a className="btn">Login</a>
+      <div className="navbar-end gap-5 ">
+        <a className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</a>
         {/* <a className="btn">Log Out</a> */}
       </div>
     </section>
