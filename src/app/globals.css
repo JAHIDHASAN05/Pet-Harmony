@@ -3,9 +3,23 @@
 @tailwind utilities;
 
 
+@import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
 
+.rancho-regular {
+  font-family: "Rancho", cursive;
+  font-weight: 900;
+ 
+}
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;  
+}
+
+.trapezoid {
+	border-bottom: 50px solid #f00a0a;
+	border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	height: 0;
+	width: 125px;
 }
