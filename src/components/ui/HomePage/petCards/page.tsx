@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { FaLocationDot } from "react-icons/fa6";
 
 const PetCard = () => {
   return (
-    <div className="max-w-sm  overflow-hidden shadow-lg p-4 rounded-2xl">
+    <div className="max-w-sm  overflow-hidden shadow-lg p-4 mx-auto rounded-2xl">
       <div className="relative">
         <Image
           width={1000}
@@ -11,8 +12,8 @@ const PetCard = () => {
           src="https://cdn.pixabay.com/photo/2024/03/14/08/52/pug-8632718_1280.jpg"
           alt="Saint Martin's Island"
         />
-        <span className=" absolute top-2 right-2 bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white">
-          Narsingdi
+        <span className=" flex items-center gap-1 absolute top-2 right-2 bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white">
+         <FaLocationDot/> <span>Narsingdi</span> 
         </span>
       </div>
       <div className="px-6 py-4">
