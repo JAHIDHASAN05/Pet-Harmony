@@ -46,7 +46,7 @@ const AdoptedPetCard = ({ messageNumber }: { messageNumber: number }) => {
   ];
 
   return (
-    <div className="px-6 min-h-60 max-h-60 flex flex-col-reverse  md:flex-row justify-around items-center bg-white rounded-2xl border  border-red-200 shadow-md">
+    <div className="px-6 py-3 md:py-0 md:min-h-60 md:max-h-60 flex flex-col-reverse  md:flex-row justify-around items-center bg-white rounded-2xl border  border-red-200 shadow-md">
       <div className="basis-1/2">
         <h2 className="text-2xl font-semibold mb-2 rancho-regular ">Adopt a pet</h2>
         <div className="mb-4">
