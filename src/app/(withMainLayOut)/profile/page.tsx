@@ -1,11 +1,14 @@
 "use client";
 
+import PetCard from "@/components/ui/HomePage/petCards/page";
+import AdoptedPetCard from "@/components/ui/HomePage/profile/AdoptedPetCard/AdoptedPetCard";
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
 const MyProfile = () => {
   return (
     <section className="min-h-screen bg-slate-50">
+        {/* profile navbar section */}
       <section className="py-4 px-3">
         <h1 className="text-4xl font-bold mb-4 rancho-regular text-[#3C0040]">
           My Account
@@ -70,7 +73,7 @@ const MyProfile = () => {
           </select>
         </div>
       </section>
-
+      {/* change password section */}
       <section>
         <h1 className="rancho-regular text-3xl text-[#3C0040] my-5 px-3">
           Change Password
@@ -86,7 +89,7 @@ const MyProfile = () => {
           </div>
         </div>
       </section>
-
+       {/* personal information section */}
       <section>
         <h1 className=" text-3xl md:text-4xl text-start my-8 font-bold rancho-regular px-3">
           Personal Information
@@ -199,6 +202,19 @@ const MyProfile = () => {
             </form>
           </div>
         </div>
+      </section>
+
+      {/* my adopted pets section */}
+      <section className="md:px-6 px-3">
+      <h1 className="rancho-regular px-3  uppercase text-4xl font-bold my-6 mb-8 ">
+        Your Adopted Pets
+      </h1>
+      <div className="grid grid-cols-1 px-2  md:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
+        {
+          [1,2,3,4,5,6,].map((pet, index)=><AdoptedPetCard  key={index} messageNumber={index}  />)
+        }
+       
+      </div>
       </section>
     </section>
   );
