@@ -50,7 +50,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-5 ">
-        <a className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</a>
+        <Link href={'/login'} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</Link>
         {/* <a className="btn">Log Out</a> */}
       </div>
     </section>

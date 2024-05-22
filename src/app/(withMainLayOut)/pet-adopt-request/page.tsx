@@ -15,6 +15,7 @@ const petAdoptPage = () => {
              Your Name
             </label>
             <input
+             placeholder="Your Email"
               type="text"
               id="fullName"
               name="fullName"
@@ -30,6 +31,7 @@ const petAdoptPage = () => {
               Your Full Address
             </label>
             <input
+             placeholder="Your Email"
               type="text"
               id="fullName"
               name="fullName"
@@ -43,6 +45,7 @@ const petAdoptPage = () => {
               Your Phone Number
             </label>
             <input
+             placeholder="Your Email"
               type="text"
               id="fullName"
               name="fullName"
@@ -58,6 +61,7 @@ const petAdoptPage = () => {
               Email
             </label>
             <input
+             placeholder="Your Email"
               type="email"
               id="email"
               name="email"
@@ -72,6 +76,7 @@ const petAdoptPage = () => {
               Message
             </label>
             <textarea
+            placeholder="Your message for us"
               id="message"
               name="message"
               rows="4"
@@ -81,6 +86,7 @@ const petAdoptPage = () => {
           <div className="mb-4">
             <label className="inline-flex items-center">
               <input
+               placeholder="Your Email"
                 type="checkbox"
                 name="terms"
                 className="form-checkbox h-5 w-5 text-blue-600"
