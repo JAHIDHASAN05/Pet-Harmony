@@ -11,6 +11,9 @@ const Navbar = () => {
         <Link href={'/about'}>About</Link>
       </li>
       <li>
+        <Link href={'/dashboard'}>Dashboard</Link>
+      </li>
+      <li>
         <Link href={'/profile'}>MyProfile</Link>
       </li>
     </>
