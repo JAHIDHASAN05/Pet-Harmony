@@ -1,17 +1,56 @@
+'use client'
+
 import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 
-const handleLogin=()=>{
+const handleLogin=async(e:any)=>{
+  e.preventDefault()
+  const email= e.target.email.value;
+  const password= e.target.password.value;
+ const data={
+  emailOrName:email,
+  password
+ }
+
+try {
+  const  res= await fetch(`http://localhost:7000/api/login`,{
+    method:"POST",
+    headers :{
+      'content-type' : 'Application/json'
+    },
+    body: JSON.stringify(data)
+     })
+    
+     const result = await res.json()
+
+     console.log(result);
+
+     if(result.success){
+      toast.success(result.message)
+
+     }
+     else{
+      toast.error(result.message)
+     }
+     
   
+} catch (error) {
+  console.log(error);
 }
+  
+   
+  
+  }
 
+  
 const LoginPage = () => {
   return (
     <section className="">
       <div className="flex flex-col items-center justify-center  bg-gray-50 pb-10  md:px-0 px-3 py-20">
-        <form className="bg-white p-6  shadow-xl w-full max-w-xl pb-20 pt-10 rounded-md  ">
+        <form onSubmit={handleLogin} className="bg-white p-6  shadow-xl w-full max-w-xl pb-20 pt-10 rounded-md  ">
           <h1 className="text-center text-4xl my-2 font-bold rancho-regular">
             Please Login
           </h1>
