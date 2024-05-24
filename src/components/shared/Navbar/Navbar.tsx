@@ -5,12 +5,20 @@ import Link from "next/link";
 import logo from '@/assets/Logo.png'
 import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const pathName = usePathname();
+  const [loggoutTrigger , setLoggoutTrigger]= useState(true)
+  const [isLogggedUser , setIsLogggedUser]= useState(false)
+
+  useEffect(()=>{
+    setIsLogggedUser(isLoggedIn())
+
+  }, [loggoutTrigger])
 
  const userInfo= getUserInfo()
- const isLogggedUser= isLoggedIn()
+ 
  console.log(userInfo);
 console.log(isLogggedUser);
   const NavItems = (
@@ -65,9 +73,13 @@ console.log(isLogggedUser);
         </ul>
       </div>
       <div className="navbar-end gap-5 ">
+       {userInfo?.id ? 
+        <button onClick={()=> {logOut() , setLoggoutTrigger(!loggoutTrigger)}}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
+               
+        :
         <Link href={'/login'} ><button onClick={()=>{localStorage.setItem('redirectAfterLoginPath',pathName )}} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</button></Link>
-        <button onClick={logOut}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
-        {/* <a className="btn">Log Out</a> */}
+
+       }
       </div>
     </section>
     

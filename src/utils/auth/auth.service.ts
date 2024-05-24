@@ -6,6 +6,7 @@ export const getUserInfo=()=>{
     const authToken=localStorage.getItem(AuthKey)
     console.log(authToken)
 
+
     if(authToken){
         const decodedData= decodedToken(authToken)
         // console.log(decodedData);
@@ -24,5 +25,9 @@ export const getUserInfo=()=>{
 }
 
 export const logOut=()=>{
-    localStorage.removeItem(AuthKey)
+
+    if(!AuthKey || typeof window === "undefined"){
+        return ''
+    }
+   localStorage.removeItem(AuthKey)
 }
