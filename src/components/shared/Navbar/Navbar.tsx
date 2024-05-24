@@ -1,3 +1,6 @@
+
+
+
 'use client'
 
 import Image from "next/image";
@@ -14,13 +17,12 @@ const Navbar = () => {
 
   useEffect(()=>{
     setIsLogggedUser(isLoggedIn())
-
   }, [loggoutTrigger])
 
+    
  const userInfo= getUserInfo()
  
- console.log(userInfo);
-console.log(isLogggedUser);
+ 
   const NavItems = (
     <>
       <li>
@@ -73,7 +75,10 @@ console.log(isLogggedUser);
         </ul>
       </div>
       <div className="navbar-end gap-5 ">
-       {userInfo?.id ? 
+
+       {
+        // @ts-ignore
+       userInfo?.id ? 
         <button onClick={()=> {logOut() , setLoggoutTrigger(!loggoutTrigger)}}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
                
         :
