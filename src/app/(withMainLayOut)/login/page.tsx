@@ -3,6 +3,10 @@ import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
+const handleLogin=()=>{
+  
+}
+
 const LoginPage = () => {
   return (
     <section className="">
@@ -72,6 +76,7 @@ const LoginPage = () => {
               <span>Sign in with Facebook</span>
             </button>
           </div>
+
         </form>
       </div>
     </section>
