@@ -96,8 +96,8 @@ const UserManagementPage = () => {
       <h1 className="rancho-regular text-center uppercase text-4xl font-bold my-6">
         All user&apos;s
       </h1>
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+      <table className="min-w-full divide-y divide-gray-200 " >
+        <thead className="bg-slate-200">
           <tr>
             <th
               scope="col"
@@ -131,7 +131,7 @@ const UserManagementPage = () => {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className=" divide-y divide-gray-200 bg-slate-50">
           {users.map((user) => (
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -157,8 +157,8 @@ const UserManagementPage = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
-                  className="block w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
-                  value={user.role}
+                  className="block w-max  border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
+                  defaultValue={user.role}
                   onChange={(e) => handleRoleChange(user.id, e.target.value)}
                 >
                   <option value="Admin">Admin</option>
@@ -167,8 +167,8 @@ const UserManagementPage = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
-                  className="block w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
-                  value={user.status}
+                  className="block w-max border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
+                  defaultValue={user.status}
                   onChange={(e) => handleStatusChange(user.id, e.target.value)}
                 >
                   <option value="Active">Active</option>
