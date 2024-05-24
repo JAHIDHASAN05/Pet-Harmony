@@ -26,7 +26,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
             
             </Link>
             <Link
-              href="#"
+              href="/dashboard/user-management"
               className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200"
             >
               <i className="material-icons">User Mangement</i>
@@ -69,7 +69,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
           </button>
         </header>
 
-       <div className="p-1 md:p-6">
+       <div className="p-2 ">
        {children}
        </div>
       </div>

@@ -31,10 +31,6 @@ const PetMangementPage = () => {
        
         ))}
 
-{/* <div className="max-w-sm flex justify-between   overflow-hidden shadow-lg bg-white  mt-[-6rem] p-3 pt-5  mx-auto rounded-2xl">
-        <button className="btn">Edit</button>      
-          <button className="btn">Remove</button> </div>  */}
-
       </div>
     </div>
   );

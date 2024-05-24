@@ -45,7 +45,7 @@ const PetCard = ({ isEditable = false }) => {
         </div>
       </div>
       <div className={` md:p-1 p-3  xl:px-6 mb-3 mt-5 pt-4 pb-2 flex items-center ${isEditable? 'justify-between':'justify-center'}`}>
-        <button className={ ` ${isEditable? '':'invisible'} bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded `}>
+        <button className={ ` ${isEditable? '':'hidden hover:bg-red-700'} bg-red-500  text-white font-bold py-2 px-2 rounded `}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -64,7 +64,7 @@ const PetCard = ({ isEditable = false }) => {
         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
           View Details
         </button>
-        <button className={  ` ${isEditable? '':'invisible'}bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded`}>
+        <button className={  ` ${isEditable? '':'hidden '}bg-red-500  text-white font-bold py-2 px-2 rounded`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
