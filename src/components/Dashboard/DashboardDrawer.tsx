@@ -69,7 +69,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
           </button>
         </header>
 
-       <div className="p-6">
+       <div className="p-1 md:p-6">
        {children}
        </div>
       </div>

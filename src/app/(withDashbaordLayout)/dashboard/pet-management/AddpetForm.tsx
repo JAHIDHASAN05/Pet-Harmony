@@ -64,8 +64,8 @@ const AddPetForm: React.FC = () => {
 
   return (
     <>
-      <button className="btn" onClick={showModal}>
-        open modal
+      <button className="btn bg-[#2563eb] text-white" onClick={showModal}>
+        Add New Pet
       </button>
       <dialog id="my_modal_5" className="modal  ">
         <div className="modal-box min-w-full min-h-screen rounded-none">
