@@ -1,52 +1,61 @@
 'use client'
 
+import { AuthKey } from "@/contants";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 
-const handleLogin=async(e:any)=>{
-  e.preventDefault()
-  const email= e.target.email.value;
-  const password= e.target.password.value;
- const data={
-  emailOrName:email,
-  password
- }
-
-try {
-  const  res= await fetch(`http://localhost:7000/api/login`,{
-    method:"POST",
-    headers :{
-      'content-type' : 'Application/json'
-    },
-    body: JSON.stringify(data)
-     })
-    
-     const result = await res.json()
-
-     console.log(result);
-
-     if(result.success){
-      toast.success(result.message)
-
-     }
-     else{
-      toast.error(result.message)
-     }
-     
-  
-} catch (error) {
-  console.log(error);
-}
-  
-   
-  
-  }
 
   
 const LoginPage = () => {
+  const router= useRouter()
+  const handleLogin=async(e:any)=>{
+    e.preventDefault()
+    const email= e.target.email.value;
+    const password= e.target.password.value;
+   const data={
+    emailOrName:email,
+    password
+   }
+  
+ 
+  
+  try {
+    const  res= await fetch(`http://localhost:7000/api/login`,{
+      method:"POST",
+      headers :{
+        'content-type' : 'Application/json'
+      },
+      body: JSON.stringify(data)
+       })
+      
+       const result = await res.json()
+  
+       console.log(result);
+  
+       if(result.success){
+        toast.success(result.message)
+  
+        localStorage.setItem(AuthKey, result.data.token)
+        router.push('/')
+  
+       }
+       else{
+        toast.error(result.message)
+       }
+       
+    
+  } catch (error) {
+    console.log(error);
+  }
+    
+     
+    
+    }
+  
   return (
     <section className="">
       <div className="flex flex-col items-center justify-center  bg-gray-50 pb-10  md:px-0 px-3 py-20">
