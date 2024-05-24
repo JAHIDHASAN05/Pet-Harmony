@@ -59,7 +59,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
 
       {/* Main Content */}
       <div className="flex-1  md:ml-60">
-        <header className="mb-8 p-6 flex justify-between items-center border bg-[#F4F7FE] ">
+        <header className="mb-8 p-6 flex justify-between items-center border bg-[#F2F6FC] ">
           <h1 className="text-2xl font-semibold">Good Morning</h1>
           <button
             className="md:hidden p-2 rounded focus:outline-none focus:ring"

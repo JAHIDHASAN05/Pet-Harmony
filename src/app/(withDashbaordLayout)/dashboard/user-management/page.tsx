@@ -73,9 +73,7 @@ const UserManagementPage = () => {
   };
 
   const handleSaveChanges = () => {
-    // Implement logic to save changes to the backend
     console.log("Saving changes:", editedUsers);
-    // Clear editedUsers state after saving changes
     setEditedUsers([]);
   };
 
