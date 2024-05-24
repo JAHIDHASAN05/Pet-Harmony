@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from '@/assets/Logo.png'
-import { getUserInfo, isLoggedIn } from "@/utils/auth/auth.service";
+import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
 
 const Navbar = () => {
 
@@ -64,6 +64,7 @@ console.log(isLogggedUser);
       </div>
       <div className="navbar-end gap-5 ">
         <Link href={'/login'} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</Link>
+        <button onClick={logOut}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
         {/* <a className="btn">Log Out</a> */}
       </div>
     </section>

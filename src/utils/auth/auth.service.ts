@@ -22,3 +22,7 @@ export const getUserInfo=()=>{
     }
     return false
 }
+
+export const logOut=()=>{
+    localStorage.removeItem(AuthKey)
+}

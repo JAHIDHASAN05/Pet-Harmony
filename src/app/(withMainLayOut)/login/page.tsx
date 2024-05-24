@@ -11,6 +11,7 @@ import { toast } from "sonner";
 
   
 const LoginPage = () => {
+  const pathHistory= localStorage.getItem('redirectAfterLoginPath')
   const router= useRouter()
   const handleLogin=async(e:any)=>{
     e.preventDefault()
@@ -40,7 +41,9 @@ const LoginPage = () => {
         toast.success(result.message)
   
         localStorage.setItem(AuthKey, result.data.token)
-        router.push('/')
+        router.push(pathHistory ||'/')
+        localStorage.removeItem('redirectAfterLoginPath')
+
   
        }
        else{
