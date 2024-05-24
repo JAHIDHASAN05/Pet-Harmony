@@ -14,7 +14,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
         } md:translate-x-0 transition-transform duration-200 ease-in-out w-60 bg-white shadow-md z-30`}
       >
         <div className="p-6">
-          <div className="text-2xl  font-bold"> Pet Harmony</div>
+         <Link href={'/'}> <div className="text-2xl  font-bold"> Pet Harmony</div></Link>
           <nav className="mt-10">
            
            
@@ -33,7 +33,7 @@ const Dashboard = ({ children }:{children:ReactNode}) => {
             
             </Link>
             <Link
-              href="#"
+              href="/dashboard/pet-management"
               className="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200"
             >
               <i className="material-icons"> Pet Management</i>

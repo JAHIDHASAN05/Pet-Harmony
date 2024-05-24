@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import logo from '@/assets/Logo.png'
 
 const Navbar = () => {
   const NavItems = (
@@ -45,7 +47,7 @@ const Navbar = () => {
             {NavItems}
           </ul>
         </div>
-        <p className="text-xl ">Pet Harmony</p>
+        <p className="text-2xl border  flex items-center justify-center"> <span className=""><Image src={logo} alt='logo' width={40} height={30}></Image></span> <span>Pet Harmony</span></p>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 ">
