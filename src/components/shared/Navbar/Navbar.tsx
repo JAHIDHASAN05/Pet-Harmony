@@ -1,8 +1,16 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
 import logo from '@/assets/Logo.png'
+import { getUserInfo, isLoggedIn } from "@/utils/auth/auth.service";
 
 const Navbar = () => {
+
+ const userInfo= getUserInfo()
+ const isLogggedUser= isLoggedIn()
+ console.log(userInfo);
+console.log(isLogggedUser);
   const NavItems = (
     <>
       <li>

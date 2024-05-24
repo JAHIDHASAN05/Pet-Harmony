@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 const pet = {
   name: "Buddy",
@@ -41,8 +42,8 @@ const PetDetails = () => {
             <div className="grid grid-cols-3 gap-2 p-4 border border[2px] rounded-b-xl">
               {pet.photos.slice(1).map((photo, index) => (
                 <Image
-                width={1000}
-                height={1000}
+                  width={1000}
+                  height={1000}
                   key={index}
                   src={photo}
                   alt={`pet-${index}`}
@@ -75,17 +76,15 @@ const PetDetails = () => {
               </ul>
             </div>
             <div>
-              <button
-                className="w-full py-3 px-6 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-                onClick={() => (window.location.href = "/adoption-request")}
-              >
-                Request Adoption
-              </button>
+              <Link href={"/pet-adopt-request"}>
+                <button className="w-full py-3 px-6 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+                  {" "}
+                  Request doption
+                </button>
+              </Link>
             </div>
           </div>
         </div>
-
-
 
         <div className="p-6">
           <h3 className="text-2xl font-bold text-gray-800 mb-4">

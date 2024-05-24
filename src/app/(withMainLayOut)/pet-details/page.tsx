@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 const pet = {
   name: "Buddy",
@@ -75,12 +76,14 @@ const PetDetails = () => {
               </ul>
             </div>
             <div>
-              <button
+             <Link href={'/pet-adopt-request'}>
+             <button
                 className="w-full py-3 px-6 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-                onClick={() => (window.location.href = "/adoption-request")}
+                
               >
-                Request Adoption
+                Request doption
               </button>
+             </Link>
             </div>
           </div>
         </div>
