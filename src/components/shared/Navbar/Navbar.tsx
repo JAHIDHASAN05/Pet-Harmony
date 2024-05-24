@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from '@/assets/Logo.png'
 import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathName = usePathname();
 
  const userInfo= getUserInfo()
  const isLogggedUser= isLoggedIn()
@@ -63,7 +65,7 @@ console.log(isLogggedUser);
         </ul>
       </div>
       <div className="navbar-end gap-5 ">
-        <Link href={'/login'} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</Link>
+        <Link href={'/login'} ><button onClick={()=>{localStorage.setItem('redirectAfterLoginPath',pathName )}} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</button></Link>
         <button onClick={logOut}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
         {/* <a className="btn">Log Out</a> */}
       </div>
