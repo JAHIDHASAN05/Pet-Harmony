@@ -5,7 +5,6 @@ import { AuthKey } from "@/contants";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 interface User {
   id: string;
   name: string;
@@ -29,12 +28,12 @@ const UserManagementPage = () => {
       createdAt: string;
       updatedAt: string;
       role:  string;
-      status:  string;
- 
+      status:  string; 
   }
 
 const [AllUser , setAllUser]= useState<IUser[]>()
-console.log(AllUser);
+
+
 
 
   useEffect(() => {
@@ -64,6 +63,7 @@ console.log(AllUser);
     let data= {role:newRole}
      const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile/change-role/${userId}`,{
       method:"POST",
+     
       headers :{        
         'Content-Type': 'application/json', 
         "authorization": localStorage.getItem(`${AuthKey}`),
@@ -111,11 +111,11 @@ console.log(AllUser);
     console.log("Saving changes:", editedUsers);
     setEditedUsers([]);
   };
-
   return (
     <div className="overflow-x-auto">
       <div className="flex justify-between items-center gap-2">
         <input
+         onChange={()=>{toast.warning('This feature will comming soom')}}
           type="text"
           name="name"
           value={""}
@@ -124,7 +124,7 @@ console.log(AllUser);
           required
         />
 
-        <button className="btn bg-[#2563eb] text-white">Add New Pet</button>
+        <button  onClick={() => {toast.warning('This feature will comming soon')}} className="btn bg-[#2563eb] text-white">Search User</button>
       </div>
       <h1 className="rancho-regular text-center uppercase text-4xl font-bold my-6">
         All user&apos;s
@@ -212,13 +212,13 @@ console.log(AllUser);
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <button
                   className="text-indigo-600 hover:text-indigo-900"
-                  onClick={() => onEditUser(user)}
+                  onClick={() => {toast.warning('This feature will comming soon')}}
                 >
                   Edit
                 </button>
                 <button
                   className="text-red-600 hover:text-red-900 ml-2"
-                  onClick={() => onDeleteUser(user.id)}
+                  onClick={() => {toast.warning('This feature will comming soon')}}
                 >
                   Delete
                 </button>
