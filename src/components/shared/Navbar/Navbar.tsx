@@ -79,6 +79,7 @@ const Navbar = () => {
             {NavItems}
           </ul>
         </div>
+          <Link href={'/'}>
         <p className="   flex items-center justify-center md:gap-2">
           {" "}
           <span className="hidden md:block">
@@ -86,6 +87,7 @@ const Navbar = () => {
           </span>{" "}
           <span className=" text-lg md:text-2xl font-bold md:mt-1 rancho-regular"><span className="text-red-500">Pet</span> Harmony</span>
         </p>
+          </Link>
       </div>
       <div className="navbar-center hidden  lg:flex">
         <ul className="menu menu-horizontal px-1 gap-5 ">{NavItems}</ul>

@@ -49,7 +49,7 @@ const PetDetails = ({ params }: { params: { petId: string } }) => {
       setSinglePetData(result.data);
     };
     singleDataFetch();
-  }, []);
+  }, [id]);
 
   const router = useRouter();
   const pathName = usePathname();

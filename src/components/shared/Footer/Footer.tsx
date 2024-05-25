@@ -2,17 +2,18 @@
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import FooterLogo from "@/assets/footerLogo-removebg-preview.png";
 import Image from "next/image";
+import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-[rgb(242,246,252)]">
       <div className="footer p-10  bg-[rgb(242,246,252)] text-base-content">
         <aside>
-        <span className="   flex items-center justify-center md:gap-2">     
-  
-            <Image src={FooterLogo} alt="logo" width={50} height={50}/>
-        
+        <Link href='/'>
+        <span className="   flex items-center justify-center md:gap-2">    
+              <Image src={FooterLogo} alt="logo" width={50} height={50}/>        
           <span  className="  font-bold md:mt-1 rancho-regular text-2xl font3rem"><span  className="text-red-500">Pet</span> Harmony</span>
         </span>
+        </Link>
           <p className="text-md font-semibold footer-title">
            Pet Harmony care Ltd.
             <br />
