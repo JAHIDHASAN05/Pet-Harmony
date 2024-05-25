@@ -113,7 +113,7 @@ const PetCard = ({ pet, isEditable = false }: IPetCardProps) => {
                 />
               </svg>
             </button>
-            <Link href={`pet/${pet.id}`}>
+            <Link href={`/pet/${pet.id}`}>
               <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
                 View Details
               </button>

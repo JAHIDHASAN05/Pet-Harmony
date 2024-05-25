@@ -1,10 +1,52 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddPetForm from "./AddpetForm";
 import PetCard from "@/components/ui/HomePage/petCards/page";
+import { IPetData } from "@/types";
 
 const PetMangementPage = () => {
+
+  const [AllPets , setAllPets]= useState<IPetData[]>([])
+ console.log(AllPets); 
+  
+  useEffect(() => {
+    const AllPetData = async () => {
+      const res = await fetch(`http://localhost:7000/api/pets`);
+      const resJson = await res.json();
+      console.log(resJson);
+      setAllPets(resJson.data)
+    };
+    AllPetData()
+  }, []);
+
+  const pet = [
+    {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      name: "Buddy",
+      species: "Dog",
+      bannerPhoto: "https://example.com/photos/buddy-banner.jpg",
+      multiplePhotos: [
+        "https://example.com/photos/buddy1.jpg",
+        "https://example.com/photos/buddy2.jpg",
+        "https://example.com/photos/buddy3.jpg",
+      ],
+      breed: "Golden Retriever",
+      age: 3,
+      specialNeeds: "None",
+      size: "Large",
+      gender: "Male",
+      location: "New York, NY",
+      healthStatus: "Healthy",
+      description:
+        "Buddy is a friendly and energetic Golden Retriever. He loves to play fetch and enjoys long walks in the park.",
+      temperament: "Friendly, Energetic, Gentle",
+      medicalHistory: "Vaccinated, Neutered",
+      adoptionRequirements: "Fenced yard, regular exercise",
+      createdAt: "2023-01-15T08:00:00Z",
+      updatedAt: "2024-05-01T12:00:00Z",
+    },
+  ];
   return (
     <div>
       <div className="flex justify-between items-center gap-2">
@@ -25,12 +67,9 @@ const PetMangementPage = () => {
       </h1>
 
       <div className="grid grid-cols-1 px-2  md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-        {[1, 2, 3, 4, 5, 6].map((pet, index) => (
-          <PetCard key={index} isEditable={true} />  
-            
-       
+        {AllPets?.map((pet, index) => (
+          <PetCard key={index} pet={pet} isEditable={true} />
         ))}
-
       </div>
     </div>
   );
