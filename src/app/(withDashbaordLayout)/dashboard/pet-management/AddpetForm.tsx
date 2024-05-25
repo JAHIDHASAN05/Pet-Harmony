@@ -1,6 +1,9 @@
 "use client";
+import { AuthKey } from "@/contants";
+import { modifyPayload } from "@/utils/payload/modifyPayload";
 import Image from "next/image";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { toast } from "sonner";
 
 // interface FormData {
 //   temperament: string;
@@ -54,10 +57,10 @@ interface FormData {
 
 
 const AddPetForm: React.FC = () => {
-  const [photos, setPhotos] = useState<File[]>([]);
+  const [multiplePhotos, setMultiplePhotos] = useState<File[]>([]);
   const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
   console.log(bannerPhoto.length);
-  console.log(photos);
+  console.log(multiplePhotos);
   // const [formData, setFormData] = useState<FormData>({
   //   name: "",
   //   description: "",
@@ -97,7 +100,7 @@ const initialFormData: FormData = {
   bannerPhoto: "",
   multiplePhotos: [],
   breed: "",
-  age:2,
+  age:0,
   specialNeeds: "",
   size: "",
   gender: "",
@@ -124,7 +127,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
   const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedPhotos = Array.from(e.target.files);
-      setPhotos([...photos, ...selectedPhotos]);
+      setMultiplePhotos([...multiplePhotos, ...selectedPhotos]);
     }
   };
   const handleSinglePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -135,15 +138,88 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
       setBannerPhoto([...selectedPhotos]);
     }
   };
-  console.log(bannerPhoto.length);
+  console.log(bannerPhoto);
 
-  const handleSubmit = (e: FormEvent) => {
+  // const handleSubmit = async(e: FormEvent) => {
+  //   e.preventDefault();
+  //   const values = {...formData,file : bannerPhoto[0]}
+  //   console.log(values,);
+  //   const  data= modifyPayload(values)
+
+  //   const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`,{
+  //     method:"POST",     
+  //     headers :{        
+  //       'Content-Type': 'multipart/form-data', 
+  //       "authorization": localStorage.getItem(`${AuthKey}`),
+  //     },
+  //     body :data
+  //    });
+  //       const response = await request.json()
+
+  //       if(response.success){
+  //         toast.success(response.message)
+
+  //       }
+  //     if(!response.success){
+  //       toast.error('something went wrong')
+  //       }
+  //       console.log(response);
+     
+  //   // console.log(formData, multiplePhotos, bannerPhoto);
+  //   closeModal();
+  // };
+
+ console.log(formData);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
+    const values = { ...formData, file: bannerPhoto[0] };
+    
+    values['age']= parseInt(values['age'])
+    console.log(values);
+    const data = modifyPayload(values);
+  
+    const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
+      method: "POST",
+      headers: {
+        "authorization": localStorage.getItem(`${AuthKey}`),
+       
+      },
+      body: data,
+    });
+  
+    const response = await request.json();
+  
+    if (response.success) {
+      toast.success(response.message);
+    } else {
+      toast.error('something went wrong');
+    }
+    
+    console.log(response);
     closeModal();
-
-    console.log(formData, photos);
   };
+  
+
+  // const modifyPayload = () => {
+  //   const payload = new FormData();
+
+  //   // Append form data fields to payload
+  //   for (const [key, value] of Object.entries(formData)) {
+  //     payload.append(key, value as string | Blob);
+  //   }
+
+  //   // Append files to payload
+  //   if (bannerPhoto) {
+  //     payload.append('file', bannerPhoto[0]);
+  //   }
+
+  //   // multiplePhotos.forEach((photo, index) => {
+  //   //   payload.append('multiplePhotos', photo);
+  //   // });
+
+  //   return payload;
+  // };
   const closeModal = () => {
     const myElement = document.getElementById("my_modal_5");
     if (myElement instanceof HTMLDialogElement) {
@@ -239,7 +315,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
                 />
 
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {photos.map((photo, index) => (
+                  {multiplePhotos.map((photo, index) => (
                     <Image
                       width={1000}
                       height={1000}
@@ -316,8 +392,8 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
                     <option value="" disabled>
                       Select Gender
                     </option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </select>
                 </div>
                 <div className="mb-4">
