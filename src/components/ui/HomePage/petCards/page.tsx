@@ -48,6 +48,7 @@ const PetCard = ({ pet, isEditable = false }: IPetCardProps) => {
         <div className="relative min-h-64">
           <Image
             fill
+            quality={100}
             className="object-contain min-h-64 " // Adjust max height as needed
             src={
               bannerPhoto ||
