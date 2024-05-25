@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }:{children:ReactNode}) => {
   const pathName = usePathname();
 
   const isLoggedInUser = isLoggedIn();
-  console.log(isLoggedInUser);
+
 
   if (!isLoggedInUser) {
     router.push("/login");

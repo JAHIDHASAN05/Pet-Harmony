@@ -25,10 +25,7 @@ const pet = {
 };
 const PetDetails = () => {
   const router= useRouter()
-
-  const pathName= usePathname()
-  
-
+  const pathName= usePathname()  
   const isLoggedInUser =  isLoggedIn()
   console.log(isLoggedInUser);
 

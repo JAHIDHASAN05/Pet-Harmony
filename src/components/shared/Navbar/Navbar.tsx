@@ -1,40 +1,55 @@
-'use client'
-
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import logo from '@/assets/Logo.png'
+import logo from "@/assets/Logo.png";
 import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { JwtPayload } from "jwt-decode";
 
 const Navbar = () => {
   const pathName = usePathname();
-  const [loggoutTrigger , setLoggoutTrigger]= useState(true)
-  const [isLogggedUser , setIsLogggedUser]= useState(false)
+  const [loggoutTrigger, setLoggoutTrigger] = useState(true);
+  const [isLogggedUser, setIsLogggedUser] = useState(false);
 
-  useEffect(()=>{
-    setIsLogggedUser(isLoggedIn())
-  }, [loggoutTrigger])
+  useEffect(() => {
+    setIsLogggedUser(isLoggedIn());
+  }, [loggoutTrigger]);
 
-    
- const userInfo= getUserInfo()
- 
- 
+  type TUserInfo = {
+    email?: string;
+    id?: string;
+    role?: string;
+    iat?: Number;
+    exp?: Number;
+  };
+
+  const currentPath= usePathname()
+  const userInfo: TUserInfo | null = getUserInfo();
+  console.log(userInfo);
+  const isActive = (route:string) => {
+       
+    return currentPath === route ? 'text-red-500 '  : 'text-white';
+  };
   const NavItems = (
-    <>
-      <li>
-        <Link href={'/'}>Home</Link>
-      </li>
-
-      <li>
-        <Link href={'/about'}>About</Link>
-      </li>
-      <li>
-        <Link href={'/dashboard'}>Dashboard</Link>
-      </li>
-      <li>
-        <Link href={'/profile'}>MyProfile</Link>
-      </li>
+    
+          <>
+      <span className={`text-xl  font-bold ${isActive('/')}`}>
+        <Link href="/">Home</Link>
+      </span>
+      <span className={`text-xl font-bold ${isActive('/about')}`}>
+        <Link href="/about">About</Link>
+      </span>
+      {userInfo?.role === 'admin' && (
+        <span className={`text-xl font-bold ${isActive('/dashboard')}`}>
+          <Link href="/dashboard">Dashboard</Link>
+        </span>
+      )}
+      {userInfo?.email && (
+        <span className={`text-xl font-bold ${isActive('/profile')}`}>
+          <Link href="/profile">MyProfile</Link>
+        </span>
+      )}
     </>
   );
   return (
@@ -44,7 +59,7 @@ const Navbar = () => {
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-5 w-5 "
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -59,32 +74,46 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content text-black mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu  menu-sm dropdown-content bg-[#3C0040]   mt-5 z-[1] p-5 shadow  rounded-box w-max"
           >
             {NavItems}
           </ul>
         </div>
-        <p className="text-2xl border  flex items-center justify-center"> <span className=""><Image src={logo} alt='logo' width={40} height={30}></Image></span> <span>Pet Harmony</span></p>
+        <p className="   flex items-center justify-center md:gap-2">
+          {" "}
+          <span className="hidden md:block">
+            <Image src={logo} alt="logo" width={40} height={30}></Image>
+          </span>{" "}
+          <span className=" text-lg md:text-2xl font-bold md:mt-1 rancho-regular"><span className="text-red-500">Pet</span> Harmony</span>
+        </p>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 ">
-          {NavItems}
-        </ul>
+      <div className="navbar-center hidden  lg:flex">
+        <ul className="menu menu-horizontal px-1 gap-5 ">{NavItems}</ul>
       </div>
       <div className="navbar-end gap-5 ">
-
-       {
-        // @ts-ignore
-       userInfo?.id ? 
-        <button onClick={()=> {logOut() , setLoggoutTrigger(!loggoutTrigger)}}  className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Log Out</button>
-               
-        :
-        <Link href={'/login'} ><button onClick={()=>{localStorage.setItem('redirectAfterLoginPath',pathName )}} className="btn bg-[#FF7D5A] border-0 rounded-[4rem] text-white font-semibold">Login</button></Link>
-
-       }
+        {userInfo?.id ? (
+          <button
+            onClick={() => {
+              logOut(), setLoggoutTrigger(!loggoutTrigger);
+            }}
+            className="btn bg-[#FF7D5A] text-xl font-bold border-0 rounded-[4rem] text-white "
+          >
+            Log Out
+          </button>
+        ) : (
+          <Link href={"/login"}>
+            <button
+              onClick={() => {
+                localStorage.setItem("redirectAfterLoginPath", pathName);
+              }}
+              className="btn text-xl font-bold bg-[#FF7D5A] border-0 rounded-[4rem] text-white "
+            >
+              Login
+            </button>
+          </Link>
+        )}
       </div>
     </section>
-    
   );
 };
 
