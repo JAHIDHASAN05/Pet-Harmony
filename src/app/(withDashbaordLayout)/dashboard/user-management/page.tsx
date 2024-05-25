@@ -76,21 +76,35 @@ console.log(AllUser);
           toast.success(response.message)
 
         }
+      if(!response.success){
+        toast.error('something went wrong')
+        }
         console.log(response);
     
   };
 
-  const handleStatusChange = (userId: string, newStatus: string) => {
-    console.log(userId, newStatus);
-    setEditedUsers((prevState) => {
-      const updatedUsers = prevState.map((user) => {
-        if (user.id === userId) {
-          return { ...user, status: newStatus };
+  const handleStatusChange =async (userId: string, newStatus: string) => {
+  
+    console.log({userId, newStatus});
+    let data= {status:newStatus}
+     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile/change-status/${userId}`,{
+      method:"POST",
+      headers :{        
+        'Content-Type': 'application/json', 
+        "authorization": localStorage.getItem(`${AuthKey}`),
+      },
+      body :JSON.stringify(data)
+     });
+        const response = await request.json()
+
+        if(response.success){
+          toast.success(response.message)
+
         }
-        return user;
-      });
-      return updatedUsers;
-    });
+      if(!response.success){
+        toast.error('something went wrong')
+        }
+        console.log(response);
   };
 
   const handleSaveChanges = () => {
@@ -191,7 +205,7 @@ console.log(AllUser);
                   defaultValue={user.status}
                   onChange={(e) => handleStatusChange(user.id, e.target.value)}
                 >
-                  <option value="inactive">Inactive</option>
+                  <option value="deactive">Deactive</option>
                   <option value="active">Active</option>
                 </select>
               </td>
