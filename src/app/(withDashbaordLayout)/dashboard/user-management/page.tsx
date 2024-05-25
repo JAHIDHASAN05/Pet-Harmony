@@ -1,38 +1,13 @@
 "use client";
-// const users = [
-//   {
-//     id: 1,
-//     name: "John Doe",
-//     email: "john@example.com",
-//     pic: "https://via.placeholder.com/150",
-//     role: "Admin",
-//     status: "Active",
-//   },
-//   {
-//     id: 2,
-//     name: "Jane Smith",
-//     email: "jane@example.com",
-//     pic: "https://via.placeholder.com/150",
-//     role: "User",
-//     status: "Inactive",
-//   },
-//   {
-//     id: 3,
-//     name: "Bob Johnson",
-//     email: "bob@example.com",
-//     pic: "https://via.placeholder.com/150",
-//     role: "User",
-//     status: "Active",
-//   },
-//   // Add more user objects as needed
-// ];
+
 
 import { AuthKey } from "@/contants";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   pic: string;
@@ -47,9 +22,8 @@ interface Props {
 }
 
 const UserManagementPage = () => {
-
   interface IUser {    
-      id: number;
+      id: string;
       email: string;
       name: string;
       createdAt: string;
@@ -83,31 +57,31 @@ console.log(AllUser);
 
 
 
-
-
-
-
-
-
-
-
-
-
   const [editedUsers, setEditedUsers] = useState<User[]>([]);
 
-  const handleRoleChange = (userId: number, newRole: string) => {
-    setEditedUsers((prevState) => {
-      const updatedUsers = prevState.map((user) => {
-        if (user.id === userId) {
-          return { ...user, role: newRole };
+  const handleRoleChange = async (userId: string, newRole: string) => {
+    console.log({userId, newRole});
+    let data= {role:newRole}
+     const request = await fetch(`http://localhost:7000/api/profile/change-role/${userId}`,{
+      method:"POST",
+      headers :{        
+        'Content-Type': 'application/json', 
+        "authorization": localStorage.getItem(`${AuthKey}`),
+      },
+      body :JSON.stringify(data)
+     });
+        const response = await request.json()
+
+        if(response.success){
+          toast.success(response.message)
+
         }
-        return user;
-      });
-      return updatedUsers;
-    });
+        console.log(response);
+    
   };
 
-  const handleStatusChange = (userId: number, newStatus: string) => {
+  const handleStatusChange = (userId: string, newStatus: string) => {
+    console.log(userId, newStatus);
     setEditedUsers((prevState) => {
       const updatedUsers = prevState.map((user) => {
         if (user.id === userId) {
