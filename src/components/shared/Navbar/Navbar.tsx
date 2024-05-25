@@ -53,7 +53,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <section className="navbar bg-[rgb(60,0,64)] text-white md:px-[3rem] ">
+    <section className="navbar bg-[rgb(60,0,64)]  text-white md:px-[3rem] ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
