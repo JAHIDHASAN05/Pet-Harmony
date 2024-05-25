@@ -62,7 +62,7 @@ console.log(AllUser);
   const handleRoleChange = async (userId: string, newRole: string) => {
     console.log({userId, newRole});
     let data= {role:newRole}
-     const request = await fetch(`http://localhost:7000/api/profile/change-role/${userId}`,{
+     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile/change-role/${userId}`,{
       method:"POST",
       headers :{        
         'Content-Type': 'application/json', 
