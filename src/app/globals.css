@@ -10,6 +10,11 @@
   font-weight: 900;
  
 }
+
+.font3rem{
+  font-size: 2rem;
+
+}
 *{
   padding: 0;
   margin: 0;

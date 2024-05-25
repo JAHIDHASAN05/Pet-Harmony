@@ -5,7 +5,7 @@ import logo from "@/assets/Logo.png";
 import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { JwtPayload } from "jwt-decode";
+
 
 const Navbar = () => {
   const pathName = usePathname();
