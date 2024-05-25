@@ -2,32 +2,121 @@
 import Image from "next/image";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
+// interface FormData {
+//   temperament: string;
+//   medicalHistory: string;
+//   adoptionRequirements: string;
+
+//   // Health status (vaccinated, spayed/neutered)
+// }
 interface FormData {
+  id: string;
   name: string;
-  description: string;
-  age: string;
+  species: string;
+  bannerPhoto: string;
+  multiplePhotos: string[];
   breed: string;
+  age: string;
+  specialNeeds: string;
+  size: string;
   gender: string;
-  healthStatus: string;
   location: string;
+  healthStatus: string;
+  description: string;
+  temperament: string;
+  medicalHistory: string;
+  adoptionRequirements: string;
+  createdAt: string;
+  updatedAt: string;
 }
+// interface IPetCreateData {
+//   id: string;
+//   name: string;
+//   species: string;
+//   bannerPhoto: string;
+//   multiplePhotos: string[];
+//   breed: string;
+//   age: number;
+//   specialNeeds: string;
+//   size: string;
+//   gender: string;
+//   location: string;
+//   healthStatus: string;
+//   description: string;
+//   temperament: string;
+//   medicalHistory: string;
+//   adoptionRequirements: string;
+//   createdAt: string;
+//   updatedAt: string;
+// }
+
+
+
 
 const AddPetForm: React.FC = () => {
   const [photos, setPhotos] = useState<File[]>([]);
+  const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
+  console.log(bannerPhoto.length);
   console.log(photos);
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    description: "",
-    age: "",
-    breed: "",
-    gender: "",
-    healthStatus: "",
-    location: "",
-  });
+  // const [formData, setFormData] = useState<FormData>({
+  //   name: "",
+  //   description: "",
+  //   age: "",
+  //   breed: "",
+  //   gender: "",
+  //   healthStatus: "",
+  //   location: "",
+  // })
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  
+interface FormData {
+  id?: string;
+  name: string;
+  species: string;
+  bannerPhoto: string;
+  multiplePhotos: string[];
+  breed: string;
+  age: number; 
+  specialNeeds: string;
+  size: string;
+  gender: string;
+  location: string;
+  healthStatus: string;
+  description: string;
+  temperament?: string;
+  medicalHistory?: string;
+  adoptionRequirements?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+const initialFormData: FormData = {
+  id: "",
+  name: "",
+  species: "",
+  bannerPhoto: "",
+  multiplePhotos: [],
+  breed: "",
+  age:2,
+  specialNeeds: "",
+  size: "",
+  gender: "",
+  location: "",
+  healthStatus: "",
+  description: "",
+  temperament: "",
+  medicalHistory: "",
+  adoptionRequirements: "",
+  createdAt: "",
+  updatedAt: ""
+};
+
+const [formData, setFormData] = useState<FormData>(initialFormData);
+
+
+  const handleInputChange = (    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>  ) => {
+    console.log(e);
+    
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -38,6 +127,15 @@ const AddPetForm: React.FC = () => {
       setPhotos([...photos, ...selectedPhotos]);
     }
   };
+  const handleSinglePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+  // const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
+
+    if (e.target.files) {
+      const selectedPhotos = Array.from(e.target.files);
+      setBannerPhoto([...selectedPhotos]);
+    }
+  };
+  console.log(bannerPhoto.length);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -46,7 +144,6 @@ const AddPetForm: React.FC = () => {
 
     console.log(formData, photos);
   };
-
   const closeModal = () => {
     const myElement = document.getElementById("my_modal_5");
     if (myElement instanceof HTMLDialogElement) {
@@ -78,6 +175,7 @@ const AddPetForm: React.FC = () => {
             </h2>
 
             <form onSubmit={handleSubmit} method="dialog">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="mb-4">
                 <label className="block text-gray-700">Pet&apos;s Name</label>
                 <input
@@ -87,19 +185,59 @@ const AddPetForm: React.FC = () => {
                   onChange={handleInputChange}
                   placeholder="pet's name"
                   className="mt-1 w-full block p-2 border border-gray-300 rounded-md"
-                  required
+                  // required
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Photos</label>
+                <label className="block text-gray-700">Pet&apos;s Types</label>
+                <input
+                  type="text"
+                  name="species"
+                  value={formData.species}
+                  onChange={handleInputChange}
+                  placeholder="pet's type"
+                  className="mt-1 w-full block p-2 border border-gray-300 rounded-md"
+                  // required
+                />
+              </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Banner Photos</label>
+                <input
+                  type="file"                 
+                  onChange={handleSinglePhotoChange}
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                  accept="image/*"
+                  // required
+                />
+              
+              
+
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {bannerPhoto.map((photo, index) => (
+                    <Image
+                      width={1000}
+                      height={1000}
+                      key={index}
+                      src={URL.createObjectURL(photo)}
+                      alt={`Photo ${index + 1}`}
+                      className="h-20 w-20 object-cover rounded-md"
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">Multiple sample Photos</label>              
+              
                 <input
                   type="file"
                   multiple
                   onChange={handlePhotoChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
-                  required
+                  // required
                 />
+
                 <div className="mt-2 flex flex-wrap gap-2">
                   {photos.map((photo, index) => (
                     <Image
@@ -115,6 +253,20 @@ const AddPetForm: React.FC = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700">
+                 temperament description
+                </label>
+                <textarea
+                  name="temperament"
+                  value={formData.temperament}
+                  onChange={handleInputChange}
+                  placeholder="Friendly, energetic, good with other dogs,Max is a playful and affectionate Labrador Retriever looking for a loving home."
+                  className="mt-1 block w-full h-[5rem] p-2 border border-gray-300 rounded-md"
+                  rows={4}
+                  // required
+                ></textarea>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700">
                   Detailed Description
                 </label>
                 <textarea
@@ -124,7 +276,7 @@ const AddPetForm: React.FC = () => {
                   placeholder="detailed description"
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   rows={4}
-                  required
+                  // required
                 ></textarea>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -137,7 +289,7 @@ const AddPetForm: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="age"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    required
+                    // required
                   />
                 </div>
                 <div className="mb-4">
@@ -149,7 +301,7 @@ const AddPetForm: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="breed"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    required
+                    // required
                   />
                 </div>
                 <div className="mb-4">
@@ -159,13 +311,30 @@ const AddPetForm: React.FC = () => {
                     value={formData.gender}
                     onChange={handleInputChange}
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    required
+                    // required
                   >
                     <option value="" disabled>
                       Select Gender
                     </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700">Gender</label>
+                  <select
+                    name="size"
+                    value={formData.size}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    // required
+                  >
+                    <option value="" disabled>
+                      Select Size
+                    </option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
                   </select>
                 </div>
                 <div className="mb-4">
@@ -177,7 +346,7 @@ const AddPetForm: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="health status"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    required
+                    // required
                   />
                 </div>
                 <div className="mb-4">
@@ -191,7 +360,7 @@ const AddPetForm: React.FC = () => {
                     onChange={handleInputChange}
                     placeholder="current location"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    required
+                    // required
                   />
                 </div>
               </div>
