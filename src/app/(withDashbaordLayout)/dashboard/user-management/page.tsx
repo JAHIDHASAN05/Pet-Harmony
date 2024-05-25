@@ -1,34 +1,35 @@
 "use client";
-const users = [
-  {
-    id: 1,
-    name: "John Doe",
-    email: "john@example.com",
-    pic: "https://via.placeholder.com/150",
-    role: "Admin",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    email: "jane@example.com",
-    pic: "https://via.placeholder.com/150",
-    role: "User",
-    status: "Inactive",
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    pic: "https://via.placeholder.com/150",
-    role: "User",
-    status: "Active",
-  },
-  // Add more user objects as needed
-];
+// const users = [
+//   {
+//     id: 1,
+//     name: "John Doe",
+//     email: "john@example.com",
+//     pic: "https://via.placeholder.com/150",
+//     role: "Admin",
+//     status: "Active",
+//   },
+//   {
+//     id: 2,
+//     name: "Jane Smith",
+//     email: "jane@example.com",
+//     pic: "https://via.placeholder.com/150",
+//     role: "User",
+//     status: "Inactive",
+//   },
+//   {
+//     id: 3,
+//     name: "Bob Johnson",
+//     email: "bob@example.com",
+//     pic: "https://via.placeholder.com/150",
+//     role: "User",
+//     status: "Active",
+//   },
+//   // Add more user objects as needed
+// ];
 
+import { AuthKey } from "@/contants";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface User {
   id: number;
@@ -46,6 +47,52 @@ interface Props {
 }
 
 const UserManagementPage = () => {
+
+  interface IUser {    
+      id: number;
+      email: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+      role:  string;
+      status:  string;
+ 
+  }
+
+const [AllUser , setAllUser]= useState<IUser[]>()
+console.log(AllUser);
+
+
+  useEffect(() => {
+    const getAllUser= async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BECKEN_URL}/user`,
+        {
+          //@ts-ignore
+          headers: {
+            authorization: localStorage.getItem(`${AuthKey}`),
+          },
+        }
+      );
+      const result = await res.json();
+      console.log(result);
+      setAllUser(result.data);
+    };
+    getAllUser();
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [editedUsers, setEditedUsers] = useState<User[]>([]);
 
   const handleRoleChange = (userId: number, newRole: string) => {
@@ -130,14 +177,15 @@ const UserManagementPage = () => {
           </tr>
         </thead>
         <tbody className=" divide-y divide-gray-200 bg-slate-50">
-          {users.map((user) => (
+          {AllUser?.map((user) => (
+           
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0 h-10 w-10">
+                  <div className="flex-shrink-0 h-16 w-16 ">
                     <Image
-                      className="h-10 w-10 rounded-full"
-                      src={user.pic}
+                      className="h-16 w-16 rounded-full"
+                      src={`https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=2048x2048&w=is&k=20&c=wMTCZdfcnfH8GFWojm54r2NRaHuoQZyv7JxrdQmchkc=`}
                       alt={user.name}
                       width={1000}
                       height={1000}
@@ -156,11 +204,11 @@ const UserManagementPage = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
                   className="block w-max  border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
-                  defaultValue={user.role}
+                  defaultValue={user.role}  
                   onChange={(e) => handleRoleChange(user.id, e.target.value)}
                 >
-                  <option value="Admin">Admin</option>
-                  <option value="User">User</option>
+                  <option value="user">user</option>
+                  <option value="admin">admin</option>
                 </select>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -169,8 +217,8 @@ const UserManagementPage = () => {
                   defaultValue={user.status}
                   onChange={(e) => handleStatusChange(user.id, e.target.value)}
                 >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="active">Active</option>
                 </select>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
