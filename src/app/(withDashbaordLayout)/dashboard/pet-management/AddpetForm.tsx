@@ -29,8 +29,6 @@ interface FormData {
   temperament: string;
   medicalHistory: string;
   adoptionRequirements: string;
-  createdAt: string;
-  updatedAt: string;
 }
 // interface IPetCreateData {
 //   id: string;
@@ -89,8 +87,6 @@ interface FormData {
   temperament?: string;
   medicalHistory?: string;
   adoptionRequirements?: string;
-  createdAt?: string;
-  updatedAt?: string;
 }
 
 const initialFormData: FormData = {
@@ -109,9 +105,7 @@ const initialFormData: FormData = {
   description: "",
   temperament: "",
   medicalHistory: "",
-  adoptionRequirements: "",
-  createdAt: "",
-  updatedAt: ""
+  adoptionRequirements: ""
 };
 
 const [formData, setFormData] = useState<FormData>(initialFormData);
