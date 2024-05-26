@@ -45,8 +45,8 @@ const PetCard = ({ pet, isEditable = false }: IPetCardProps) => {
   } = pet;
   return (
     <>
-      <div className="  max-w-sm overflow-hidden shadow-lg p-1 mx-auto rounded-2xl">
-        <div className="relative min-h-64">
+      <div className="  max-w-sm overflow-hidden w-full shadow-lg p-1 mx-auto rounded-2xl">
+        <div className="relative min-h-64 ">
           <Image
             fill
             quality={100}
