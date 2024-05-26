@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import AddPetForm from "./AddpetForm";
-import PetCard from "@/components/ui/HomePage/petCards/page";
+import PetCard from "@/components/ui/HomePage/petCards/PetCard";
 import { IPetData } from "@/types";
 
 const PetMangementPage = () => {

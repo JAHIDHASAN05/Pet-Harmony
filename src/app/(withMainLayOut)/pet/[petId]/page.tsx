@@ -155,7 +155,7 @@ const PetDetails = ({ params }: { params: { petId: string } }) => {
     );
   }
 
-  return <div className="min-h-screen"> </div>;
+  return <div className="min-h-screen"></div>;
 };
 
 export default PetDetails;

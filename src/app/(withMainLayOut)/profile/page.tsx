@@ -1,6 +1,6 @@
 "use client";
 
-import PetCard from "@/components/ui/HomePage/petCards/page";
+import PetCard from "@/components/ui/HomePage/petCards/PetCard";
 import AdoptedPetCard from "@/components/ui/HomePage/profile/AdoptedPetCard/AdoptedPetCard";
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";

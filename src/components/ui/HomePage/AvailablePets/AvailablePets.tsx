@@ -1,6 +1,6 @@
 
 import Image from "next/image";
-import PetCard from "../petCards/page";
+import PetCard from "../petCards/PetCard";
 import { IPetData } from "@/types";
 import SearchBar from "../SearchBar/SearchBar";
 
