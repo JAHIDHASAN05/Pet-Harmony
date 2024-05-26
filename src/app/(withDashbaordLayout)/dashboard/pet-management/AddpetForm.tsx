@@ -90,7 +90,6 @@ interface FormData {
 }
 
 const initialFormData: FormData = {
-  id: "",
   name: "",
   species: "",
   bannerPhoto: "",
@@ -176,7 +175,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
       method: "POST",
       headers: {
-        "authorization": localStorage.getItem(`${AuthKey}`),
+        "authorization": localStorage.getItem(`${AuthKey}`) as string,
        
       },
       body: data,
@@ -186,6 +185,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
   
     if (response.success) {
       toast.success(response.message);
+
     } else {
       toast.error('something went wrong');
     }
