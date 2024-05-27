@@ -12,7 +12,7 @@ const PetMangementPage = () => {
   
   useEffect(() => {
     const AllPetData = async () => {
-      const res = await fetch(`http://localhost:7000/api/pets`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`);
       const resJson = await res.json();
       console.log(resJson);
       setAllPets(resJson.data)

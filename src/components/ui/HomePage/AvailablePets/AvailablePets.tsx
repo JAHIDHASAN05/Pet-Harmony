@@ -122,7 +122,7 @@ const AvailablePets = () => {
     if (dynamicURL) {
 
       const getAllPets = async () => {
-        const res = await fetch(`http://localhost:7000/api/pets${dynamicURL}`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets${dynamicURL}`)
         const resJson = await res.json()
 
         setAllPets(resJson.data);
@@ -133,7 +133,7 @@ const AvailablePets = () => {
 
     else {
       const getAllPets = async () => {
-        const res = await fetch(`http://localhost:7000/api/pets`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`)
         const resJson = await res.json()
 
         setAllPets(resJson.data);

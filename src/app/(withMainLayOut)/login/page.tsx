@@ -20,7 +20,7 @@ const LoginPage = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:7000/api/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/login`, {
         method: "POST",
         headers: {
           "content-type": "Application/json",
