@@ -13,7 +13,7 @@ type TProps = {
 
 const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
 
-  console.log(pet , 'from modal');
+  // console.log(pet , 'from modal');
   const initialFormData = {
     name: "",
     species: "",
@@ -57,7 +57,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
           healthStatus: pet.healthStatus || ""
         }
       }));
-      console.log("Pet data updated for id:", id, pet);
+      // console.log("Pet data updated for id:", id, pet);
     }
   }, [pet, id]);
 

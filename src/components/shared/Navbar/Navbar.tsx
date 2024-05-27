@@ -130,12 +130,14 @@ import logo from "@/assets/Logo.png";
 import { getUserInfo, isLoggedIn, logOut } from "@/utils/auth/auth.service";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AuthKey } from "@/contants";
 
 const Navbar = () => {
   const pathName = usePathname();
   const [loggoutTrigger, setLoggoutTrigger] = useState(true);
   const [isLogggedUser, setIsLogggedUser] = useState(false);
   const [userInfo, setUserInfo] = useState<TUserInfo | null>(null);
+  const [loginTrigger, setLoginTrigger]= useState(false)
 
   type TUserInfo = {
     email?: string;
@@ -144,11 +146,47 @@ const Navbar = () => {
     iat?: number;
     exp?: number;
   };
+  let count= 0
+
+
+  const handleLoginSuccess = () => {
+    setLoginTrigger((prev) => !prev);
+  };
+
+  // Assign the function to the window object
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+          //@ts-ignore
+      window.notifyLoginSuccess = handleLoginSuccess;
+    }
+  }, []);
+
 
   useEffect(() => {
     setIsLogggedUser(isLoggedIn());
+    //@ts-ignore
     setUserInfo(getUserInfo());
-  }, [loggoutTrigger]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
+  }, [loggoutTrigger,isLogggedUser ,loginTrigger]);
+
+  // if(loginTrigger && !(userInfo?.role) ){
+    
+  // }
+  // if(isLogggedUser && !(userInfo?.role)){
+  //   setLoginTrigger(!loginTrigger)
+  // }
+
+  // if(!isLogggedUser && userInfo && count <3){
+  //    setLoginTrigger(!loginTrigger)
+  //    count++
+  // }
+
+  // if(userInfo != null){
+  //   console.log(null);
+  //   count=0
+  // }
+  console.log(isLogggedUser, userInfo);
 
   const currentPath = usePathname();
 
@@ -177,7 +215,9 @@ const Navbar = () => {
     </>
   );
 
+ 
   return (
+    
     <section className="navbar bg-[rgb(60,0,64)] text-white md:px-[3rem]">
       <div className="navbar-start">
         <div className="dropdown">

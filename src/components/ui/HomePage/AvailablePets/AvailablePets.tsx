@@ -108,6 +108,7 @@ const AvailablePets = () => {
 
   useEffect(() => {
     setDynamicURL(generateDynamicURL())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData])
 
 
@@ -165,7 +166,7 @@ const AvailablePets = () => {
               <select id="breed" name="breed" className="select select-primary w-full max-w-xs" >
                 <option disabled selected>Filter by Breed</option>
                 {
-                  breeds.map(breed => <option key={breed}>{breed}</option>)
+                  breeds?.map(breed => <option key={breed}>{breed}</option>)
                 }
               </select>
             </div>
@@ -179,7 +180,7 @@ const AvailablePets = () => {
               <select id="species" name="species" className="select select-primary w-full max-w-xs" >
                 <option disabled selected>Filter by Species</option>
                 {
-                  species.map(species => <option key={species}>{species}</option>)
+                  species?.map(species => <option key={species}>{species}</option>)
                 }
               </select>
             </div>
@@ -193,7 +194,7 @@ const AvailablePets = () => {
               <select id="age" name="age" className="select select-primary w-full max-w-xs" >
                 <option disabled selected>Filter by Age</option>
                 {
-                  ages.map(age => <option key={age}>{age}</option>)
+                  ages?.map(age => <option key={age}>{age}</option>)
                 }
               </select>
             </div>
@@ -223,7 +224,7 @@ const AvailablePets = () => {
               <select id="location" name="location" className="select select-primary w-full max-w-xs" >
                 <option disabled selected>Filter by Location</option>
                 {
-                  locations.map(location => <option key={location}>{location}</option>)
+                  locations?.map(location => <option key={location}>{location}</option>)
                 }
               </select>
             </div>
