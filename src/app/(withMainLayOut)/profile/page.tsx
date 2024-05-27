@@ -17,7 +17,7 @@ const res = fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/adoption-requests/my-ad
 .then(data=>{
   
 const myAllPetsRequest = data?.data;
-const myAdoptedPets = myAllPetsRequest.map((pet: any)=>{
+const myAdoptedPets = myAllPetsRequest?.map((pet: any)=>{
   const petData = pet.pet
   return {...petData,adoptedDate:pet.updatedAt}
 })
@@ -38,7 +38,7 @@ setMyAdoptedPets(myAdoptedPets);
         </h1>
         <div className="grid grid-cols-1 px-2  md:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
           {
-            myAdoptedPets.map((myAdoptedPet, index) => <AdoptedPetCard key={index} myAdoptedPet={myAdoptedPet} />)
+            myAdoptedPets?.map((myAdoptedPet, index) => <AdoptedPetCard key={index} myAdoptedPet={myAdoptedPet} />)
           }
 
         </div>
