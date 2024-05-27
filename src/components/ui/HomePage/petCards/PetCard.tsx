@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdHealthAndSafety } from "react-icons/md";
-import PetCardEditButton from "./petCardEditButton";
+import EditPetFormModal from "./EditPetFormModal";
 import PetCardDeleteButton from "./PetCardDeleteButton";
 
 interface IPetCardProps {
@@ -147,7 +147,7 @@ if(name=='fawdf'){
               isEditable ? "justify-between" : "justify-center"
             }`}
           >
-           <PetCardEditButton isEditable={isEditable}/>
+           <EditPetFormModal pet={pet} id ={id} isEditable={isEditable}/>
             <Link href={`/pet/${pet.id}`}>
               <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
                 View Details
