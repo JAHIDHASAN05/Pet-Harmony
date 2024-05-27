@@ -27,3 +27,21 @@ export const modifyPayload = (values: any) => {
     return formData;
   }
   
+  type TMultipleValues = {
+    id: { id: string };
+    file: File[];
+  };
+
+  export function modifyMultiplePayload(values:TMultipleValues) {
+    const formData = new FormData();
+  
+    // Append the id to the form data
+    formData.append('data', JSON.stringify({id:values.id}));
+  
+    // Append each file to the form data
+    values.file.forEach((file, index) => {
+      formData.append('files', file);
+    });
+  
+    return formData;
+  }

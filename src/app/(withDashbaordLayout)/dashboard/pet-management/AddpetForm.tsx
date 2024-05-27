@@ -1,6 +1,6 @@
 "use client";
 import { AuthKey } from "@/contants";
-import { modifyPayload } from "@/utils/payload/modifyPayload";
+import { modifyMultiplePayload, modifyPayload } from "@/utils/payload/modifyPayload";
 import Image from "next/image";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "sonner";
@@ -164,10 +164,11 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
 
  console.log(formData);
 
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const values = { ...formData, file: bannerPhoto[0] };
-    
+    //@ts-ignore
     values['age']= parseInt(values['age'])
     console.log(values);
     const data = modifyPayload(values);
@@ -175,8 +176,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
       method: "POST",
       headers: {
-        "authorization": localStorage.getItem(`${AuthKey}`) as string,
-       
+        "authorization": localStorage.getItem(`${AuthKey}`) as string,       
       },
       body: data,
     });
@@ -185,6 +185,19 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
   
     if (response.success) {
       toast.success(response.message);
+          const id= {id :response.data.id}
+          const files =multiplePhotos
+          const values = { ...id, file: files }
+          const data = modifyMultiplePayload(values);   
+          const request= await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/upload-multiple-photos`,{
+            method:"POST",
+            headers: {
+              "authorization": localStorage.getItem(`${AuthKey}`) as string,       
+            },
+            body: data,
+          })       
+          const result =await request.json()
+          console.log( "mulple phothos",result,);
 
     } else {
       toast.error('something went wrong');
