@@ -1,6 +1,6 @@
 "use client";
 import { AuthKey } from "@/contants";
-import { modifyPayload } from "@/utils/payload/modifyPayload";
+import { getUpdatedValues, modifyPayload } from "@/utils/payload/modifyPayload";
 import Image from "next/image";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { toast } from "sonner";
@@ -12,6 +12,9 @@ type TProps = {
 };
 
 const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
+
+
+  const [previousPetInfomation, setPreviousValueInformation]= useState(pet)
 
   // console.log(pet , 'from modal');
   const initialFormData = {
@@ -93,13 +96,27 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const values = { ...formDataMap[id], file: bannerPhotoMap[id][0] };
+    const NewFormValues = { ...formDataMap[id], file: bannerPhotoMap[id][0] };
+    NewFormValues["age"] = parseInt(NewFormValues["age"]);
+    console.log(previousPetInfomation);
+    console.log(NewFormValues);
 
-    values["age"] = parseInt(values["age"]);
-    const data = modifyPayload(values);
+    const updatedValues= getUpdatedValues(previousPetInfomation,NewFormValues)
+    console.log(updatedValues);
 
-    const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
-      method: "POST",
+    const finalValuesForBeckend= {...updatedValues }
+
+    if(bannerPhotoMap[id][0]){
+      finalValuesForBeckend['file']=bannerPhotoMap[id][0]
+    }
+    console.log(finalValuesForBeckend);
+    
+
+    const data = modifyPayload(finalValuesForBeckend);
+    // console.log(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/${id}`);
+
+    const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/${id}`, {
+      method: "PUT",
       headers: {
         authorization: localStorage.getItem(`${AuthKey}`) as string,
       },
@@ -107,6 +124,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
     });
 
     const response = await request.json();
+    console.log(response);
 
     if (response.success) {
       toast.success(response.message);

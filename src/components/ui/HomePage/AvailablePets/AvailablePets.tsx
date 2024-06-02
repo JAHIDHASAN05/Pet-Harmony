@@ -285,7 +285,7 @@ const AvailablePets = () => {
         </h1>
         <div className="grid grid-cols-1 px-2  md:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
           {
-            allPets.map((pet: any) => <PetCard key={pet?.id} pet={pet} />)
+            allPets?.map((pet: any) => <PetCard key={pet?.id} pet={pet} />)
           }
 
         </div>

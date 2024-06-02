@@ -45,3 +45,38 @@ export const modifyPayload = (values: any) => {
   
     return formData;
   }
+
+
+
+  type ValueObject = { [key: string]: any };
+
+export const getUpdatedValues=(oldValue:ValueObject, newValue:ValueObject):ValueObject=> {
+    let updatedValue:ValueObject = {};
+    for (let key in oldValue) {
+        if (oldValue.hasOwnProperty(key) && newValue.hasOwnProperty(key)) {
+            if (oldValue[key] !== newValue[key]) {
+                updatedValue[key] = newValue[key];
+            }
+        }
+    }
+
+    return updatedValue;
+}
+
+
+
+
+
+// function getUpdatedValues(oldValue: ValueObject, newValue: ValueObject): ValueObject {
+//     let updatedValue: ValueObject = {};
+
+//     for (let key in oldValue) {
+//         if (oldValue.hasOwnProperty(key) && newValue.hasOwnProperty(key)) {
+//             if (oldValue[key] !== newValue[key]) {
+//                 updatedValue[key] = newValue[key];
+//             }
+//         }
+//     }
+
+//     return updatedValue;
+// }
