@@ -13,7 +13,7 @@ type TProps = {
 
 const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
 
-
+const [bannerPhoto,setBannerPhoto]=useState("")
   const [previousPetInfomation, setPreviousValueInformation]= useState(pet)
 
   // console.log(pet , 'from modal');
@@ -29,7 +29,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
     healthStatus: "",
     currentLocation: ""
   };
-
+  const image_hosting_url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`
   const [formDataMap, setFormDataMap] = useState<{ [key: string]: any }>({
     [id]: initialFormData
   });
@@ -74,6 +74,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
     }));
   };
 
+
   const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedPhotos = Array.from(e.target.files);
@@ -84,34 +85,38 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
     }
   };
 
-  const handleSinglePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSinglePhotoChange = async(e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedPhotos = Array.from(e.target.files);
-      setBannerPhotoMap((prev) => ({
-        ...prev,
-        [id]: [...selectedPhotos]
-      }));
+      const formData = new FormData()
+      formData.append("image",e.target.files[0])
+      const res =await fetch(image_hosting_url,{
+        method:"POST",
+        body:formData
+      })
+      const imgResponse = await res.json()
+      if(imgResponse.success){
+        setBannerPhoto(imgResponse.data.display_url)
+      }
     }
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const NewFormValues = { ...formDataMap[id], file: bannerPhotoMap[id][0] };
+    const NewFormValues = { ...formDataMap[id]};
     NewFormValues["age"] = parseInt(NewFormValues["age"]);
-    console.log(previousPetInfomation);
-    console.log(NewFormValues);
+    NewFormValues["bannerPhoto"] = bannerPhoto;
+ 
 
     const updatedValues= getUpdatedValues(previousPetInfomation,NewFormValues)
-    console.log(updatedValues);
+ 
 
     const finalValuesForBeckend= {...updatedValues }
 
     if(bannerPhotoMap[id][0]){
       finalValuesForBeckend['file']=bannerPhotoMap[id][0]
     }
-    console.log(finalValuesForBeckend);
-    
 
+    
     const data = modifyPayload(finalValuesForBeckend);
     // console.log(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/${id}`);
 
@@ -134,6 +139,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
 
     closeModal();
   };
+
 
   const closeModal = () => {
     const myElement = document.getElementById(`PetEditModal-${id}`);
@@ -221,22 +227,24 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                 <label className="block text-gray-700">Banner Photos</label>
                 <input
                   type="file"
+                  multiple={false}
                   onChange={handleSinglePhotoChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
                 />
+                {bannerPhoto &&
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {bannerPhotoMap[id]?.map((photo, index) => (
+              
                     <Image
                       width={1000}
                       height={1000}
-                      key={index}
-                      src={URL.createObjectURL(photo)}
-                      alt={`Photo ${index + 1}`}
+                    
+                      src={bannerPhoto}
+                      alt={`Photo`}
                       className="h-20 w-20 object-cover rounded-md"
                     />
-                  ))}
-                </div>
+                  
+                </div>}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700">Multiple sample Photos</label>
@@ -247,18 +255,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
                 />
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {multiplePhotosMap[id]?.map((photo, index) => (
-                    <Image
-                      width={1000}
-                      height={1000}
-                      key={index}
-                      src={URL.createObjectURL(photo)}
-                      alt={`Photo ${index + 1}`}
-                      className="h-20 w-20 object-cover rounded-md"
-                    />
-                  ))}
-                </div>
+              
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700">Temperament Description</label>
