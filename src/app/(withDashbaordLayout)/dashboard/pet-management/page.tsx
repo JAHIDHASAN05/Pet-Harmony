@@ -44,6 +44,10 @@ const [isPetDelete,setIsPetDelete] = useState(1)
           <PetCard key={index} pet={pet} isEditable={true} isPetDelete={isPetDelete} setIsPetDelete={setIsPetDelete}/>
         ))}
       </div>
+
+
+
+
     </div>
   );
 };
