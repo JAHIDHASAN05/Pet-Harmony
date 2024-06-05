@@ -13,9 +13,23 @@ type TProps = {
 };
 
 const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
-
   const [bannerPhoto, setBannerPhoto] = useState("")
   const [multiplePhotos, setMultiplePhotos] = useState([]);
+  const getSinglePetData = async(PetId: string) => {
+    // Implement the logic to get a single pet data if necessary
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/${PetId}`,{
+    headers:{
+      "authorization": localStorage.getItem(`${AuthKey}`) as string,
+    }
+   })
+  const data = await res.json()
+  setBannerPhoto(data.data.bannerPhoto);
+  setMultiplePhotos(data.data.multiplePhotos)
+  };
+
+
+
+ 
   const [previousPetInfomation, setPreviousValueInformation] = useState(pet)
 
   // console.log(pet , 'from modal');
@@ -157,9 +171,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
     }
   };
 
-  const getSinglePetData = (PetId: string) => {
-    // Implement the logic to get a single pet data if necessary
-  };
+ 
 
   return (
     <>
@@ -228,6 +240,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                 <label className="block text-gray-700">Banner Photos</label>
                 <input
                   type="file"
+                  defaultValue={bannerPhoto}
                   multiple={false}
                   onChange={handleSinglePhotoChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
