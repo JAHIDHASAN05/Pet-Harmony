@@ -52,24 +52,6 @@ interface FormData {
 // }
 
 
-
-
-const AddPetForm: React.FC = () => {
-  const [multiplePhotos, setMultiplePhotos] = useState<File[]>([]);
-  const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
-  console.log(bannerPhoto.length);
-  console.log(multiplePhotos);
-  // const [formData, setFormData] = useState<FormData>({
-  //   name: "",
-  //   description: "",
-  //   age: "",
-  //   breed: "",
-  //   gender: "",
-  //   healthStatus: "",
-  //   location: "",
-  // })
-
-  
 interface FormData {
   id?: string;
   name: string;
@@ -88,6 +70,12 @@ interface FormData {
   medicalHistory?: string;
   adoptionRequirements?: string;
 }
+
+
+const AddPetForm: React.FC = ({isPetDelete, setIsPetDelete}) => {
+  const [multiplePhotos, setMultiplePhotos] = useState<File[]>([]);
+  const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
+
 
 const initialFormData: FormData = {
   name: "",
@@ -131,38 +119,9 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
       setBannerPhoto([...selectedPhotos]);
     }
   };
-  console.log(bannerPhoto);
 
-  // const handleSubmit = async(e: FormEvent) => {
-  //   e.preventDefault();
-  //   const values = {...formData,file : bannerPhoto[0]}
-  //   console.log(values,);
-  //   const  data= modifyPayload(values)
 
-  //   const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`,{
-  //     method:"POST",     
-  //     headers :{        
-  //       'Content-Type': 'multipart/form-data', 
-  //       "authorization": localStorage.getItem(`${AuthKey}`),
-  //     },
-  //     body :data
-  //    });
-  //       const response = await request.json()
 
-  //       if(response.success){
-  //         toast.success(response.message)
-
-  //       }
-  //     if(!response.success){
-  //       toast.error('something went wrong')
-  //       }
-  //       console.log(response);
-     
-  //   // console.log(formData, multiplePhotos, bannerPhoto);
-  //   closeModal();
-  // };
-
- console.log(formData);
 
 
   const handleSubmit = async (e: FormEvent) => {
@@ -170,7 +129,6 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
     const values = { ...formData, file: bannerPhoto[0] };
     //@ts-ignore
     values['age']= parseInt(values['age'])
-    console.log(values);
     const data = modifyPayload(values);
   
     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
@@ -185,6 +143,7 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
   
     if (response.success) {
       toast.success(response.message);
+      setIsPetDelete(isPetDelete+1)
           const id= {id :response.data.id}
           const files =multiplePhotos
           const values = { ...id, file: files }
@@ -197,13 +156,11 @@ const [formData, setFormData] = useState<FormData>(initialFormData);
             body: data,
           })       
           const result =await request.json()
-          console.log( "mulple phothos",result,);
 
     } else {
       toast.error('something went wrong');
     }
-    
-    console.log(response);
+
     closeModal();
   };
   

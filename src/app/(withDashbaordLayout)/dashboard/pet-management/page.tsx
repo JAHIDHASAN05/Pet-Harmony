@@ -21,7 +21,7 @@ const [isPetDelete,setIsPetDelete] = useState<number>(1)
 
   return (
     <div>
-      <div className="flex justify-between items-center gap-2">
+      <div className="flex container mx-auto justify-between items-center gap-2">
         <input
           type="text"
           name="name"
@@ -31,7 +31,7 @@ const [isPetDelete,setIsPetDelete] = useState<number>(1)
           required
         />
 
-        <AddPetForm />
+        <AddPetForm isPetDelete={isPetDelete} setIsPetDelete={setIsPetDelete}/>
       </div>
 
       <h1 className="rancho-regular text-center uppercase text-4xl font-bold my-6">
