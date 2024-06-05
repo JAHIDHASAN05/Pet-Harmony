@@ -1,9 +1,54 @@
 "use client"
+type User = {
+  name?: string;
+  email?: string;
+  age: string
+} | {}
+import { AuthKey } from "@/contants";
+import { FormEvent, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const ProfileClientPart = () => {
-    return (
-        <>
-              <section className="py-4 px-3">
+  const [userInfo, setUserInfo] = useState<User>({})
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile`, {
+      headers: {
+        authorization: localStorage.getItem(AuthKey) as string
+      }
+    })
+      .then(res => res.json())
+      .then(data => setUserInfo(data?.data))
+  }, [])
+
+
+  const handleUserUpdate = async (e: any) => {
+    e.preventDefault()
+    const updatedData = {
+      name: (e).target.fullName.value,
+      age: Number(e.target.age.value),
+      email: e.target.email.value,
+    }
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: localStorage.getItem(AuthKey) as string
+        },
+        body: JSON.stringify(updatedData)
+      })
+     const data = await res.json()
+          toast.success(data.message)
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
+
+  return (
+    <>
+      <section className="py-4 px-3">
         <h1 className="text-4xl font-bold mb-4 rancho-regular text-[#3C0040]">
           My Account
         </h1>
@@ -67,15 +112,15 @@ const ProfileClientPart = () => {
           </select>
         </div>
       </section>
-    
-       {/* personal information section */}
+
+      {/* personal information section */}
       <section>
         <h1 className=" text-3xl md:text-4xl text-start my-8 font-bold rancho-regular px-3">
           Personal Information
         </h1>
         <div className=" pb-10 my-5  md:px-10 px-3 ">
           <div className="border border-slate-200  bg-white w-full  rounded-2xl px-2 ">
-            <form className=" w-full max-w-xl pb-12 pt-10 mx-auto rounded-md  ">
+            <form onSubmit={handleUserUpdate} className=" w-full max-w-xl pb-4 pt-10 mx-auto rounded-md  ">
               <div className="md:flex justify-between ">
                 <div className="mb-4">
                   <label
@@ -85,6 +130,7 @@ const ProfileClientPart = () => {
                     Your Full Name
                   </label>
                   <input
+                    defaultValue={(userInfo) && userInfo.name}
                     placeholder="Your full name"
                     type="text"
                     id="fullName"
@@ -100,8 +146,9 @@ const ProfileClientPart = () => {
                     Age
                   </label>
                   <input
+                    defaultValue={userInfo && userInfo.age}
                     placeholder="Your age"
-                    type="text"
+                    type="number"
                     id="age"
                     name="age"
                     className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
@@ -119,12 +166,13 @@ const ProfileClientPart = () => {
                 <input
                   type="email"
                   id="email"
+                  defaultValue={userInfo && userInfo.email}
                   name="email"
                   placeholder="your email"
                   className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
                 />
               </div>
-              <div className="md:flex justify-between">
+              {/* <div className="md:flex justify-between">
                 <div className="mb-4">
                   <label
                     htmlFor="email"
@@ -155,8 +203,8 @@ const ProfileClientPart = () => {
                     className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
                   />
                 </div>
-              </div>
-              <div className="mb-4">
+              </div> */}
+              {/* <div className="mb-4">
                 <label className="inline-flex items-center">
                   <input
                     placeholder="Your Email"
@@ -168,9 +216,9 @@ const ProfileClientPart = () => {
                     I agree to the Terms and Conditions
                   </span>
                 </label>
-              </div>
+              </div> */}
 
-              <div className="text-center">
+              <div className="text-center mt-8">
                 <button
                   type="submit"
                   className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
@@ -184,8 +232,8 @@ const ProfileClientPart = () => {
       </section>
 
 
-        {/* change password section */}
-        <section>
+      {/* change password section */}
+      <section>
         <h1 className="rancho-regular text-3xl text-[#3C0040] my-5 px-3">
           Change Password
         </h1>
@@ -200,8 +248,8 @@ const ProfileClientPart = () => {
           </div>
         </div>
       </section>
-        </>
-    );
+    </>
+  );
 };
 
 export default ProfileClientPart;
