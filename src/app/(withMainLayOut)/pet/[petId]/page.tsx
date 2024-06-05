@@ -131,7 +131,7 @@ const PetDetails = ({ params }: { params: { petId: string } }) => {
                     </ul>
                   </div>
                   <div>
-                    <Link href={"/pet-adopt-request"}>
+                    <Link href={`/pet-adopt-request/${singlePetData.id}`}>
                       <button className="w-full py-3 px-6 bg-purple-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
                         {" "}
                         Request Adoption

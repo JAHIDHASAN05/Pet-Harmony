@@ -3,7 +3,7 @@ import React from 'react';
 
 const Review = () => {
     return (
-        <section data-aos="slide-up">
+        <section data-aos="slide-up my-5 my-4">
             <h1 className='text-4xl container mx-auto rounded-lg text-white  text-center py-9 font-bold bg-gradient-to-r from-red-300 via-red-400 to-red-500'>What Our Customar Say</h1>
             <div className="grid mb-8 border container mx-auto border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
                 <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
