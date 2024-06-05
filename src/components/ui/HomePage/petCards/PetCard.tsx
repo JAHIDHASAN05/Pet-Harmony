@@ -145,7 +145,7 @@ const PetCard = ({ pet, isEditable = false ,isPetDelete, setIsPetDelete}: IPetCa
               isEditable ? "justify-between" : "justify-center"
             }`}
           >
-           <EditPetFormModal pet={pet} id ={id} isEditable={isEditable}/>
+           <EditPetFormModal pet={pet} id ={id} isEditable={isEditable}  isPetDelete={isPetDelete} setIsPetDelete={setIsPetDelete}/>
             <Link href={`/pet/${pet.id}`}>
               <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
                 View Details

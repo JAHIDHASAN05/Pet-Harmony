@@ -10,9 +10,9 @@ type TProps = {
   isEditable: boolean;
   id: string;
   pet: any; // Add the type for pet if you have one
-};
+} | any;
 
-const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
+const EditPetFormModal = ({ isEditable = true, id, pet,isPetDelete, setIsPetDelete }: TProps) => {
   const [bannerPhoto, setBannerPhoto] = useState("")
   const [multiplePhotos, setMultiplePhotos] = useState([]);
   const getSinglePetData = async(PetId: string) => {
@@ -148,6 +148,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
    
 
     if (response.success) {
+      setIsPetDelete(isPetDelete+1)
       toast.success(response.message);
     } else {
       toast.error("something went wrong");
