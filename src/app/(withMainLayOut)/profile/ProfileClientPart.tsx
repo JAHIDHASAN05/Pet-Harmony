@@ -5,6 +5,7 @@ type User = {
   age: string
 } | {}
 import { AuthKey } from "@/contants";
+import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -30,7 +31,6 @@ const ProfileClientPart = () => {
       email: e.target.email.value,
       address: e.target.address.value,
     }
-    console.log(e.target.address.value);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile`, {
         method: "PUT",
@@ -40,9 +40,9 @@ const ProfileClientPart = () => {
         },
         body: JSON.stringify(updatedData)
       })
-     const data = await res.json()
-     console.log(data);
-          toast.success(data.message)
+      const data = await res.json()
+      console.log(data);
+      toast.success(data.message)
     }
     catch (err) {
       console.log(err);
@@ -192,7 +192,7 @@ const ProfileClientPart = () => {
                   className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
                 />
               </div>
-             
+
 
               <div className="text-center mt-8">
                 <button
@@ -219,7 +219,7 @@ const ProfileClientPart = () => {
               create a new Password
             </h1>
             <button className="bg-[#C74D2F] px-5 py-2 text-xl text-white font-bold rounded-full">
-              Change Password
+              <Link href="/change-password">Change Password</Link>
             </button>
           </div>
         </div>
