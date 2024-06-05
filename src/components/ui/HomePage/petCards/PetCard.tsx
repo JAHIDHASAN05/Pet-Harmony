@@ -83,7 +83,7 @@ const data = {
   //       }
   //     }
 
-const PetCard = ({ pet, isEditable = false }: IPetCardProps) => {
+const PetCard = ({ pet, isEditable = false ,setIsPetDelete,isPetDelete}: IPetCardProps) => {
   const {
     name,
     id,
@@ -94,9 +94,7 @@ const PetCard = ({ pet, isEditable = false }: IPetCardProps) => {
     healthStatus,
     bannerPhoto,
   } = pet;
-if(name=='fawdf'){
-  console.log(pet, id);
-}
+
   return (
     <>
       <div className="  max-w-sm overflow-hidden w-full shadow-lg p-1 mx-auto rounded-2xl">
@@ -153,7 +151,7 @@ if(name=='fawdf'){
                 View Details
               </button>
             </Link>
-            <PetCardDeleteButton key={id} id={id} isEditable={isEditable}/>
+            <PetCardDeleteButton key={id} id={id} isEditable={isEditable} isPetDelete={isPetDelete} setIsPetDelete={setIsPetDelete}/>
           </div>
         </div>
       </div>

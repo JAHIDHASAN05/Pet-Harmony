@@ -10,8 +10,8 @@ type TProps={
     isEditable:boolean;
     id: string
 }
-const PetCardDeleteButton = ({ isEditable = false, id }:TProps) => {
- 
+const PetCardDeleteButton = ({ isEditable = false, id,setIsPetDelete,isPetDelete }:TProps) => {
+
   const [confirm ,setConfirm]= useState<boolean>(false)
   const [isShowSweetAlert, setIsShowSweetAlert]= useState<boolean>(true)
   const router= useRouter()
@@ -27,10 +27,11 @@ const PetCardDeleteButton = ({ isEditable = false, id }:TProps) => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
       }).then((result:any) => {
-        console.log(result);
+        
         if (result.isConfirmed) {
             setConfirm(true)
             setIsShowSweetAlert(false)
+            setIsPetDelete(isPetDelete+1)
         }
       });
    }

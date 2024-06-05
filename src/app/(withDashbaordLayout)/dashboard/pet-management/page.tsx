@@ -6,47 +6,19 @@ import PetCard from "@/components/ui/HomePage/petCards/PetCard";
 import { IPetData } from "@/types";
 
 const PetMangementPage = () => {
-
+const [isPetDelete,setIsPetDelete] = useState<number>(1)
   const [AllPets , setAllPets]= useState<IPetData[]>([])
- console.log(AllPets); 
-  
   useEffect(() => {
     const AllPetData = async () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`);
       const resJson = await res.json();
-      console.log(resJson);
+    
       setAllPets(resJson.data)
     };
     AllPetData()
-  }, []);
+  }, [isPetDelete]);
 
-  const pet = [
-    {
-      id: "123e4567-e89b-12d3-a456-426614174000",
-      name: "Buddy",
-      species: "Dog",
-      bannerPhoto: "https://example.com/photos/buddy-banner.jpg",
-      multiplePhotos: [
-        "https://example.com/photos/buddy1.jpg",
-        "https://example.com/photos/buddy2.jpg",
-        "https://example.com/photos/buddy3.jpg",
-      ],
-      breed: "Golden Retriever",
-      age: 3,
-      specialNeeds: "None",
-      size: "Large",
-      gender: "Male",
-      location: "New York, NY",
-      healthStatus: "Healthy",
-      description:
-        "Buddy is a friendly and energetic Golden Retriever. He loves to play fetch and enjoys long walks in the park.",
-      temperament: "Friendly, Energetic, Gentle",
-      medicalHistory: "Vaccinated, Neutered",
-      adoptionRequirements: "Fenced yard, regular exercise",
-      createdAt: "2023-01-15T08:00:00Z",
-      updatedAt: "2024-05-01T12:00:00Z",
-    },
-  ];
+
   return (
     <div>
       <div className="flex justify-between items-center gap-2">
@@ -68,7 +40,7 @@ const PetMangementPage = () => {
 
       <div className="grid grid-cols-1 px-2  md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
         {AllPets?.map((pet, index) => (
-          <PetCard key={index} pet={pet} isEditable={true} />
+          <PetCard key={index} pet={pet} isEditable={true} isPetDelete={isPetDelete} setIsPetDelete={setIsPetDelete}/>
         ))}
       </div>
     </div>
