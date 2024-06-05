@@ -10,7 +10,7 @@ type TProps={
     isEditable:boolean;
     id: string
 }
-const PetCardDeleteButton = ({ isEditable = false, id,setIsPetDelete,isPetDelete }:TProps) => {
+const PetCardDeleteButton = ({ isEditable = false, id,isPetDelete, setIsPetDelete }:TProps) => {
 
   const [confirm ,setConfirm]= useState<boolean>(false)
   const [isShowSweetAlert, setIsShowSweetAlert]= useState<boolean>(true)
@@ -31,7 +31,7 @@ const PetCardDeleteButton = ({ isEditable = false, id,setIsPetDelete,isPetDelete
         if (result.isConfirmed) {
             setConfirm(true)
             setIsShowSweetAlert(false)
-            setIsPetDelete(isPetDelete+1)
+           
         }
       });
    }
@@ -50,8 +50,8 @@ const PetCardDeleteButton = ({ isEditable = false, id,setIsPetDelete,isPetDelete
           );
 
           const response = await request.json();
-          console.log(response);
           if (response.success) {
+            setIsPetDelete(isPetDelete+1)
               router.refresh()
             //@ts-ignore
             Swal.fire({

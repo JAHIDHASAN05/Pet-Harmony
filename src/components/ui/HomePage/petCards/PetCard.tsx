@@ -83,7 +83,7 @@ const data = {
   //       }
   //     }
 
-const PetCard = ({ pet, isEditable = false ,setIsPetDelete,isPetDelete}: IPetCardProps) => {
+const PetCard = ({ pet, isEditable = false ,isPetDelete, setIsPetDelete}: IPetCardProps) => {
   const {
     name,
     id,

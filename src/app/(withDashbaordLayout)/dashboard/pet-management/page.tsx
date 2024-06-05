@@ -6,7 +6,8 @@ import PetCard from "@/components/ui/HomePage/petCards/PetCard";
 import { IPetData } from "@/types";
 
 const PetMangementPage = () => {
-const [isPetDelete,setIsPetDelete] = useState<number>(1)
+const [isPetDelete,setIsPetDelete] = useState(1)
+
   const [AllPets , setAllPets]= useState<IPetData[]>([])
   useEffect(() => {
     const AllPetData = async () => {
