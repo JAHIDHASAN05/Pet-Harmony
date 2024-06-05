@@ -37,11 +37,12 @@ setMyAdoptedPets(myAdoptedPets);
           Your Adopted Pets
         </h1>
         <div className="grid grid-cols-1 px-2  md:grid-cols-1 lg:grid-cols-2 gap-4 my-5">
-          {
-            myAdoptedPets?.map((myAdoptedPet, index) => <AdoptedPetCard key={index} myAdoptedPet={myAdoptedPet} />)
+          { myAdoptedPets ?
+            myAdoptedPets?.map((myAdoptedPet, index) => <AdoptedPetCard key={index} myAdoptedPet={myAdoptedPet} />):<h1 className="py-5">No adopted pets found</h1>
           }
 
         </div>
+
       </section>
     </section>
   );
