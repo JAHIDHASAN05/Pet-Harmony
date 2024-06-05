@@ -111,7 +111,7 @@ const PetCard = ({ pet, isEditable = false ,isPetDelete, setIsPetDelete}: IPetCa
           />
           <span className="flex items-center xl:gap-1 absolute top-2 right-1 bg-red-500 rounded-full xl:px-3 lg:p-1 py-1 text-sm font-semibold text-white">
             <FaLocationDot />
-            <span>Narsingdi</span>
+            <span>{location}</span>
           </span>
           <span className="flex items-center gap-0 md:gap-0 lg:gap-1 absolute top-2 left-1 bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white">
             <MdHealthAndSafety />

@@ -240,7 +240,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                 <label className="block text-gray-700">Banner Photos</label>
                 <input
                   type="file"
-                  defaultValue={bannerPhoto}
+                 
                   multiple={false}
                   onChange={handleSinglePhotoChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
@@ -371,7 +371,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                   <input
                     type="text"
                     name="location"
-                    value={pet.location}
+                    defaultValue={pet.location}
                     // defaultValue={pet.location}
                     onChange={handleInputChange}
                     placeholder="current location"
@@ -384,7 +384,7 @@ const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
                   <input
                     type="text"
                     name="healthStatus"
-                    value={pet.healthStatus}
+                    defaultValue={pet.healthStatus}
                     // defaultValue={pet.healthStatus}
                     onChange={handleInputChange}
                     placeholder="health status"
