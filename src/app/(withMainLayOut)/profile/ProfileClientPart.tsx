@@ -28,7 +28,9 @@ const ProfileClientPart = () => {
       name: (e).target.fullName.value,
       age: Number(e.target.age.value),
       email: e.target.email.value,
+      address: e.target.address.value,
     }
+    console.log(e.target.address.value);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/profile`, {
         method: "PUT",
@@ -39,6 +41,7 @@ const ProfileClientPart = () => {
         body: JSON.stringify(updatedData)
       })
      const data = await res.json()
+     console.log(data);
           toast.success(data.message)
     }
     catch (err) {
@@ -158,6 +161,23 @@ const ProfileClientPart = () => {
 
               <div className="mb-4">
                 <label
+                  htmlFor="address"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Address
+                </label>
+                <input
+                  type="address"
+                  id="address"
+                  defaultValue={userInfo && userInfo.address}
+                  name="address"
+                  placeholder="your current address"
+                  className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
                   htmlFor="email"
                   className="block text-gray-700 font-bold mb-2"
                 >
@@ -172,51 +192,7 @@ const ProfileClientPart = () => {
                   className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
                 />
               </div>
-              {/* <div className="md:flex justify-between">
-                <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-700 font-bold mb-2"
-                  >
-                    password
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="your password"
-                    className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="email"
-                    className="block text-gray-700 font-bold mb-2"
-                  >
-                    password
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="your password"
-                    className="w-full px-3 py-2 border border-red-500 rounded focus:outline-none focus:ring-2 focus:ring-red-300"
-                  />
-                </div>
-              </div> */}
-              {/* <div className="mb-4">
-                <label className="inline-flex items-center">
-                  <input
-                    placeholder="Your Email"
-                    type="checkbox"
-                    name="terms"
-                    className="form-checkbox h-5 w-5 text-blue-600"
-                  />
-                  <span className="ml-2 text-gray-700">
-                    I agree to the Terms and Conditions
-                  </span>
-                </label>
-              </div> */}
+             
 
               <div className="text-center mt-8">
                 <button
