@@ -47,7 +47,7 @@ interface FormData {
 
 
 const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPetDelete: any }) => {
-  const [multiplePhotos, setMultiplePhotos] = useState<File[]>([]);
+  const [multiplePhotos, setMultiplePhotos] = useState([]);
   const [bannerPhoto, setBannerPhoto] = useState("");
 
   const image_hosting_url = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`
@@ -79,21 +79,9 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedPhotos = Array.from(e.target.files);
-      setMultiplePhotos([...multiplePhotos, ...selectedPhotos]);
-    }
-  };
+
 
   const handleSinglePhotoChange = async(e: ChangeEvent<HTMLInputElement>) => {
-    // const [bannerPhoto, setBannerPhoto] = useState<File[]>([]);
-
-    // if (e.target.files) {
-    //   const selectedPhotos = Array.from(e.target.files);
-    //   setBannerPhoto([...selectedPhotos]);
-    // }
-  
     if (e.target.files) {
       const formData = new FormData()
       formData.append("image",e.target.files[0])
@@ -107,6 +95,25 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
       }
     }
   };
+  const handleMultiplePhotos = async(e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const formData = new FormData()
+      const photoLinks = []
+      for (let i = 0; i < e.target.files.length; i++) {
+        
+        formData.append("image",e.target.files[i])
+        const res =await fetch(image_hosting_url,{
+          method:"POST",
+          body:formData
+        })
+        const imgResponse = await res.json()
+        if(imgResponse.success){
+          photoLinks.push(imgResponse.data.display_url)
+        }
+    }
+    setMultiplePhotos(photoLinks)
+    }
+  };
 
 
   const handleSubmit = async (e: FormEvent) => {
@@ -115,6 +122,7 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
     //@ts-ignore
     values['age'] = parseInt(values['age'])
     values['bannerPhoto'] = bannerPhoto
+    values['multiplePhotos'] = multiplePhotos
     const data = modifyPayload(values);
 
     const request = await fetch(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets`, {
@@ -214,6 +222,7 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
                 <label className="block text-gray-700">Banner Photos</label>
                 <input
                   type="file"
+                  multiple={false}
                   onChange={handleSinglePhotoChange}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
@@ -242,7 +251,7 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
                 <input
                   type="file"
                   multiple
-                  onChange={handlePhotoChange}
+                  onChange={handleMultiplePhotos}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
                 // required
@@ -254,7 +263,7 @@ const AddPetForm = ({ isPetDelete, setIsPetDelete }: { isPetDelete: any, setIsPe
                       width={1000}
                       height={1000}
                       key={index}
-                      src={URL.createObjectURL(photo)}
+                      src={photo}
                       alt={`Photo ${index + 1}`}
                       className="h-20 w-20 object-cover rounded-md"
                     />
