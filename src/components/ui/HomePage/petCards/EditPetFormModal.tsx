@@ -1,6 +1,7 @@
 "use client";
 import { AuthKey } from "@/contants";
 import { getUpdatedValues, modifyPayload } from "@/utils/payload/modifyPayload";
+import { assert } from "console";
 import Image from "next/image";
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { toast } from "sonner";
@@ -13,8 +14,9 @@ type TProps = {
 
 const EditPetFormModal = ({ isEditable = true, id, pet }: TProps) => {
 
-const [bannerPhoto,setBannerPhoto]=useState("")
-  const [previousPetInfomation, setPreviousValueInformation]= useState(pet)
+  const [bannerPhoto, setBannerPhoto] = useState("")
+  const [multiplePhotos, setMultiplePhotos] = useState([]);
+  const [previousPetInfomation, setPreviousValueInformation] = useState(pet)
 
   // console.log(pet , 'from modal');
   const initialFormData = {
@@ -34,13 +36,6 @@ const [bannerPhoto,setBannerPhoto]=useState("")
     [id]: initialFormData
   });
 
-  const [multiplePhotosMap, setMultiplePhotosMap] = useState<{ [key: string]: File[] }>({
-    [id]: []
-  });
-
-  const [bannerPhotoMap, setBannerPhotoMap] = useState<{ [key: string]: File[] }>({
-    [id]: []
-  });
 
   // Sync formDataMap with pet prop when it changes
   useEffect(() => {
@@ -75,26 +70,36 @@ const [bannerPhoto,setBannerPhoto]=useState("")
   };
 
 
-  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleMultiplePhotos = async(e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedPhotos = Array.from(e.target.files);
-      setMultiplePhotosMap((prev) => ({
-        ...prev,
-        [id]: [...prev[id], ...selectedPhotos]
-      }));
+      const formData = new FormData()
+      const photoLinks = []
+      for (let i = 0; i < e.target.files.length; i++) {
+        
+        formData.append("image",e.target.files[i])
+        const res =await fetch(image_hosting_url,{
+          method:"POST",
+          body:formData
+        })
+        const imgResponse = await res.json()
+        if(imgResponse.success){
+          photoLinks.push(imgResponse.data.display_url)
+        }
+    }
+    setMultiplePhotos(photoLinks) 
     }
   };
 
-  const handleSinglePhotoChange = async(e: ChangeEvent<HTMLInputElement>) => {
+  const handleSinglePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const formData = new FormData()
-      formData.append("image",e.target.files[0])
-      const res =await fetch(image_hosting_url,{
-        method:"POST",
-        body:formData
+      formData.append("image", e.target.files[0])
+      const res = await fetch(image_hosting_url, {
+        method: "POST",
+        body: formData
       })
       const imgResponse = await res.json()
-      if(imgResponse.success){
+      if (imgResponse.success) {
         setBannerPhoto(imgResponse.data.display_url)
       }
     }
@@ -102,21 +107,18 @@ const [bannerPhoto,setBannerPhoto]=useState("")
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const NewFormValues = { ...formDataMap[id]};
+    const NewFormValues = { ...formDataMap[id] };
     NewFormValues["age"] = parseInt(NewFormValues["age"]);
     NewFormValues["bannerPhoto"] = bannerPhoto;
- 
+    NewFormValues["multiplePhotos"] = multiplePhotos;
 
-    const updatedValues= getUpdatedValues(previousPetInfomation,NewFormValues)
- 
 
-    const finalValuesForBeckend= {...updatedValues }
+    const updatedValues = getUpdatedValues(previousPetInfomation, NewFormValues)
 
-    if(bannerPhotoMap[id][0]){
-      finalValuesForBeckend['file']=bannerPhotoMap[id][0]
-    }
 
-    
+    const finalValuesForBeckend = { ...updatedValues }
+
+  
     const data = modifyPayload(finalValuesForBeckend);
     // console.log(`${process.env.NEXT_PUBLIC_BECKEN_URL}/pets/${id}`);
 
@@ -129,7 +131,7 @@ const [bannerPhoto,setBannerPhoto]=useState("")
     });
 
     const response = await request.json();
-    console.log(response);
+   
 
     if (response.success) {
       toast.success(response.message);
@@ -166,9 +168,8 @@ const [bannerPhoto,setBannerPhoto]=useState("")
           showModal();
           getSinglePetData(id);
         }}
-        className={`${
-          isEditable ? "" : "hidden hover:bg-red-700"
-        } bg-red-500  text-white font-bold py-2 px-2 rounded`}
+        className={`${isEditable ? "" : "hidden hover:bg-red-700"
+          } bg-red-500  text-white font-bold py-2 px-2 rounded`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -233,29 +234,42 @@ const [bannerPhoto,setBannerPhoto]=useState("")
                   accept="image/*"
                 />
                 {bannerPhoto &&
-                <div className="mt-2 flex flex-wrap gap-2">
-              
+                  <div className="mt-2 flex flex-wrap gap-2">
+
                     <Image
                       width={1000}
                       height={1000}
-                    
+
                       src={bannerPhoto}
                       alt={`Photo`}
                       className="h-20 w-20 object-cover rounded-md"
                     />
-                  
-                </div>}
+
+                  </div>}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700">Multiple sample Photos</label>
                 <input
                   type="file"
                   multiple
-                  onChange={handlePhotoChange}
+                  onChange={handleMultiplePhotos}
                   className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   accept="image/*"
                 />
-              
+
+              </div>
+
+              <div className="mt-2 flex flex-wrap gap-2">
+                {multiplePhotos.map((photo, index) => (
+                  <Image
+                    width={1000}
+                    height={1000}
+                    key={index}
+                    src={photo}
+                    alt={`Photo ${index + 1}`}
+                    className="h-20 w-20 object-cover rounded-md"
+                  />
+                ))}
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700">Temperament Description</label>
@@ -320,12 +334,12 @@ const [bannerPhoto,setBannerPhoto]=useState("")
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                   />
                 </div>
-            
-               
 
-             
+
+
+
                 <div className="mb-4">
-                <label className="block text-gray-700">Breed</label>
+                  <label className="block text-gray-700">Breed</label>
                   <input
                     type="text"
                     name="breed"
@@ -335,13 +349,13 @@ const [bannerPhoto,setBannerPhoto]=useState("")
                     onChange={handleInputChange}
                     placeholder="breed"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    // required
+                  // required
                   />
                 </div> <div className="mb-4">
-             <label className="block text-gray-700">
+                  <label className="block text-gray-700">
                     Current Location
                   </label>
-                 <input
+                  <input
                     type="text"
                     name="location"
                     value={pet.location}
@@ -349,11 +363,11 @@ const [bannerPhoto,setBannerPhoto]=useState("")
                     onChange={handleInputChange}
                     placeholder="current location"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    // required
+                  // required
                   />
                 </div>
                 <div className="mb-4">
-                   <label className="block text-gray-700">Health Status</label>
+                  <label className="block text-gray-700">Health Status</label>
                   <input
                     type="text"
                     name="healthStatus"
@@ -362,10 +376,10 @@ const [bannerPhoto,setBannerPhoto]=useState("")
                     onChange={handleInputChange}
                     placeholder="health status"
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-                    // required
+                  // required
                   />
                 </div>
-             
+
               </div>
               <div className="flex justify-end">
                 <button
